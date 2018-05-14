@@ -1,15 +1,15 @@
 import RPi.GPIO as GPIO
 import time
 
-PIN = 18
-PWMA1 = 6 
-PWMA2 = 13
-PWMB1 = 20
-PWMB2 = 21
-D1 = 12
-D2 = 26
+PIN 	= 18
+PWMA1 	= 6 
+PWMA2 	= 13
+PWMB1 	= 20
+PWMB2 	= 21
+D1 		= 12
+D2 		= 26
 
-PWM = 50
+PWM 	= 50
 
 GPIO.setmode(GPIO.BCM)
 GPIO.setwarnings(True)
@@ -35,20 +35,22 @@ def	set_motor(A1,A2,B1,B2):
 def forward():
 	GPIO.output(PWMA1,1)
 	GPIO.output(PWMA2,0)
-	GPIO.output(PWMB1,1)
-	GPIO.output(PWMB2,0)
+	GPIO.output(PWMB1,0)
+	GPIO.output(PWMB2,1)
+	time.sleep(2)	
+
 
 def stop():
 	set_motor(0,0,0,0)
 
 def reverse():
-	set_motor(0,1,0,1)
+	set_motor(0,1,1,0)
 
 def left():
 	set_motor(1,0,0,0)
 
 def right():
-	set_motor(0,0,1,0)
+	set_motor(0,0,0,1)
 
 def functie():
 	if True:
@@ -61,6 +63,5 @@ def functie():
 		reverse()
 		print "reverse"
 	GPIO.cleanup()
-
 
 functie()
