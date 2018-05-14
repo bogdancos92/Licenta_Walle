@@ -1,7 +1,6 @@
 import RPi.GPIO as GPIO
 import time
 
-<<<<<<< HEAD
 PIN 	= 18
 PWMA1 	= 6 
 PWMA2 	= 13
@@ -11,17 +10,6 @@ D1 		= 12
 D2 		= 26
 
 PWM 	= 50
-=======
-PIN = 18
-PWMA1 = 6 
-PWMA2 = 13
-PWMB1 = 20
-PWMB2 = 21
-D1 = 12
-D2 = 26
-
-PWM = 50
->>>>>>> 10f00ce91ccb9c5b89461f00aa23b75ffce97f9b
 
 GPIO.setmode(GPIO.BCM)
 GPIO.setwarnings(True)
@@ -51,10 +39,6 @@ def forward():
 	GPIO.output(PWMB2,1)
 	time.sleep(2)	
 
-<<<<<<< HEAD
-
-=======
->>>>>>> 10f00ce91ccb9c5b89461f00aa23b75ffce97f9b
 def stop():
 	set_motor(0,0,0,0)
 
@@ -79,9 +63,4 @@ def functie():
 		print "reverse"
 	GPIO.cleanup()
 
-<<<<<<< HEAD
 functie()
-=======
-
-functie()
->>>>>>> 10f00ce91ccb9c5b89461f00aa23b75ffce97f9b
