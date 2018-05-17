@@ -1,15 +1,15 @@
 #Libraries
 import RPi.GPIO as GPIO
 import time
- 
+
 #GPIO Mode (BOARD / BCM)
 GPIO.setmode(GPIO.BCM)
  
 #set GPIO Pins
-GPIO_TRIGGER_FRONT  = 18
-GPIO_ECHO_FRONT     = 17
-GPIO_TRIGGER_SIDE   = 23
-GPIO_ECHO_SIDE      = 22
+GPIO_TRIGGER_FRONT  = 17
+GPIO_ECHO_FRONT     = 18
+GPIO_TRIGGER_SIDE   = 22
+GPIO_ECHO_SIDE      = 23
  
 #set GPIO direction (IN / OUT)
 GPIO.setup(GPIO_TRIGGER_FRONT, GPIO.OUT)
@@ -18,6 +18,7 @@ GPIO.setup(GPIO_TRIGGER_SIDE, GPIO.OUT)
 GPIO.setup(GPIO_ECHO_SIDE, GPIO.IN)
  
 def distance(Trigger, Echo):
+    #print ("Entering function with pin %d and pin %d", Trigger, Echo)
     # set Trigger to HIGH
     GPIO.output(Trigger, True)
  
@@ -47,11 +48,13 @@ def distance(Trigger, Echo):
 if __name__ == '__main__':
     try:
         while True:
-            dist = distance(GPIO_TRIGGER_FRONT, GPIO_ECHO_FRONT)
-            print ("Measured Distance in front = %.1f cm" % dist)
+            print ("Front")
+            dist_front = distance(GPIO_TRIGGER_FRONT, GPIO_ECHO_FRONT)
+            print ("Measured Distance in front = %.1f cm" % dist_front)
             time.sleep(1)
-            dist = distance(GPIO_TRIGGER_SIDE, GPIO_ECHO_SIDE)
-            print ("Measured Distance on the right side = %.1f cm" % dist)
+            print ("Side")
+            dist_side = distance(GPIO_TRIGGER_SIDE, GPIO_ECHO_SIDE)
+            print ("Measured Distance on the right side = %.1f cm" % dist_side)
             time.sleep(1)
  
         # Reset by pressing CTRL + C
