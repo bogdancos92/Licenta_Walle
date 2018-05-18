@@ -16,14 +16,15 @@ GPIO.setup(GPIO_TRIGGER_FRONT, GPIO.OUT)
 GPIO.setup(GPIO_ECHO_FRONT, GPIO.IN)
 GPIO.setup(GPIO_TRIGGER_SIDE, GPIO.OUT)
 GPIO.setup(GPIO_ECHO_SIDE, GPIO.IN)
+time.sleep(2)
  
 def distance(Trigger, Echo):
     #print ("Entering function with pin %d and pin %d", Trigger, Echo)
     # set Trigger to HIGH
     GPIO.output(Trigger, True)
  
-    # set Trigger after 0.01ms to LOW
-    time.sleep(0.00001)
+    # set Trigger after 0.05ms to LOW
+    time.sleep(0.00005)
     GPIO.output(Trigger, False)
  
     StartTime = time.time()
@@ -32,10 +33,16 @@ def distance(Trigger, Echo):
     # save StartTime
     while GPIO.input(Echo) == 0:
         StartTime = time.time()
+        TimeElapsed = StartTime - StopTime
+        if TimeElapsed > 3:
+            break
  
     # save time of arrival
     while GPIO.input(Echo) == 1:
         StopTime = time.time()
+        TimeElapsed = StopTime - StartTime
+        if TimeElapsed > 3:
+            break
  
     # time difference between start and arrival
     TimeElapsed = StopTime - StartTime
@@ -47,15 +54,17 @@ def distance(Trigger, Echo):
  
 if __name__ == '__main__':
     try:
-        while True:
+        while True:            
+            #print ("Side")
+            #dist_side = distance(GPIO_TRIGGER_SIDE, GPIO_ECHO_SIDE)
+            #print ("Measured Distance on the right side = %.1f cm" % dist_side)
+            #time.sleep(2)
             print ("Front")
             dist_front = distance(GPIO_TRIGGER_FRONT, GPIO_ECHO_FRONT)
             print ("Measured Distance in front = %.1f cm" % dist_front)
-            time.sleep(1)
-            print ("Side")
-            dist_side = distance(GPIO_TRIGGER_SIDE, GPIO_ECHO_SIDE)
-            print ("Measured Distance on the right side = %.1f cm" % dist_side)
-            time.sleep(1)
+            time.sleep(2)
+            
+            
  
         # Reset by pressing CTRL + C
     except KeyboardInterrupt:
