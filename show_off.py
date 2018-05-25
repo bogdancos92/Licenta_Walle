@@ -2,79 +2,87 @@ import os
 import RPi.GPIO as GPIO
 from time import sleep
 
-PIN = 18
-PWMA1 = 6
-PWMA2 = 13
-PWMB1 = 20
-PWMB2 = 21
-D1 = 12
-D2 = 26
+#setting left engine pins
+LEFT_POZ 	= 6
+LEFT_NEG 	= 13
+PWM_LEFT 	= 12
 
+#setting right engine pins
+RIGHT_POZ 	= 20
+RIGHT_NEG 	= 21
+PWM_RIGHT 	= 26
+
+#PWM factor
 PWM = 80
 
+#setup
 GPIO.setmode(GPIO.BCM)
 GPIO.setwarnings(True)
-GPIO.setup(PIN,GPIO.IN,GPIO.PUD_UP)
-GPIO.setup(PWMA1,GPIO.OUT)
-GPIO.setup(PWMA2,GPIO.OUT)
-GPIO.setup(PWMB1,GPIO.OUT)
-GPIO.setup(PWMB2,GPIO.OUT)
-GPIO.setup(D1,GPIO.OUT)
-GPIO.setup(D2,GPIO.OUT)
-p1 = GPIO.PWM(D1,500)
-p2 = GPIO.PWM(D2,500)
+
+#left motor setup
+GPIO.setup(LEFT_POZ,GPIO.OUT)
+GPIO.setup(LEFT_NEG,GPIO.OUT)
+GPIO.setup(PWM_LEFT,GPIO.OUT)
+
+#right motor setup
+GPIO.setup(RIGHT_POZ,GPIO.OUT)
+GPIO.setup(RIGHT_NEG,GPIO.OUT)
+GPIO.setup(PWM_RIGHT,GPIO.OUT)
+
+#frequency setup
+p1 = GPIO.PWM(PWM_LEFT,500)
+p2 = GPIO.PWM(PWM_RIGHT,500)
 p1.start(PWM)
 p2.start(PWM)
 
-def set_motor(A1,A2,B1,B2):
-        GPIO.output(PWMA1,A1)
-        GPIO.output(PWMA2,A2)
-        GPIO.output(PWMB1,B1)
-        GPIO.output(PWMB2,B2)
+#main function for motor control
+def set_motor(A1,A2,B1,B2,timer):
+    GPIO.output(LEFT_POZ,A1)
+    GPIO.output(LEFT_NEG,A2)
+    GPIO.output(RIGHT_POZ,B1)
+    GPIO.output(RIGHT_NEG,B2)
+    sleep(timer)
+
+#direction control functions
+def stop():
+    set_motor(0,0,0,0,0)
 
 def forward(timer):
-        set_motor(1,0,0,1)
-	sleep(timer)
-
-def stop():
-        set_motor(0,0,0,0)
+    set_motor(1,0,0,1,timer)
 
 def reverse(timer):
-        set_motor(0,1,1,0)
-	sleep(timer)
+    set_motor(0,1,1,0,timer)
 
 def left(timer):
-        set_motor(1,0,0,0)
-	sleep(timer)
+    set_motor(1,0,0,0,timer)
 
 def right(timer):
-        set_motor(0,0,0,1)
-	sleep(timer)
+    set_motor(0,0,0,1,timer)
 
 def rotate(timer):
-	set_motor(1,0,1,0)
-	sleep(timer)
+	set_motor(1,0,1,0,timer)
 
+#kind of a maine function
 def functie():
-        if True:
+    if True:
 		sleep(0.5)
 		stop()
-	        os.system('amixer set PCM -- 100%')
-	        os.system('mpg123 -q start_v12.mp3 &')
-	        print "RRRRRRRRROAAAAAAAAAARRRRRRR"
-	        sleep(21)
-		print"Entry song"
-		os.system('mpg123 -q song.mp3 &')
-		sleep(3)
-                forward(2)
-                print "fwd"
-                rotate(1)
+		print "stop"
+		sleep(0.5)
+    	forward(1)
+    	print "fwd 1"
+    	rotate(1)
+    	print "rotate 1"
 		forward(1)
-		rotate(3)
-                print "360"
-		sleep(2)
-        GPIO.cleanup()
+		print "fwd 1"
+		rotate(2)
+    	print "rotate 2"
+    	left(1)
+    	print "left 1"
+    	right(1)
+    	print "right 1"
+    	sleep(2)
+   	GPIO.cleanup()
 
 
 functie()
-
