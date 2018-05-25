@@ -69,19 +69,20 @@ def functie():
 		stop()
 		print "stop"
 		sleep(0.5)
-    	forward(1)
-    	print "fwd 1"
-    	rotate(1)
-    	print "rotate 1"
-		forward(1)
-		print "fwd 1"
+    	forward(2)
+    	print "fwd 2"
+    	rotate(2)
+    	print "rotate 2"
+		forward(2)
+		print "fwd 2"
 		rotate(2)
     	print "rotate 2"
-    	left(1)
+    	left(2)
     	print "left 1"
-    	right(1)
-    	print "right 1"
+    	right(2)
+    	print "right 2"
     	sleep(2)
+    	print "Thats all folks"
    	GPIO.cleanup()
 
 
