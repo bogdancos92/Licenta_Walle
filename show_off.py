@@ -54,16 +54,16 @@ def compute_RPM():
     #3V...125RPM
     #5V...200RPM
     #6V...230RPM
-    voltage = map(PWM, 0, 100, 0, 6)
-    if voltage < 3:
-        voltage = 3
+    voltage = map(PWM, 0, 100, 0.0, 6.0)
+    if voltage < 3.0:
+        voltage = 3.0
         RPM = 125
-    elif voltage >= 3 and voltage < 5:
-        RPM = map (voltage, 3, 5 , 125, 200)
-    elif voltage >=5 and voltage < 6:
-        RPM = map (voltage, 5, 6 , 200, 230)
-    elif voltage >= 6:
-        voltage = 6
+    elif voltage >= 3.0 and voltage < 5:
+        RPM = map (voltage, 3.0, 5.0 , 125, 200)
+    elif voltage >=5.0 and voltage < 6.0:
+        RPM = map (voltage, 5.0, 6.0 , 200, 230)
+    elif voltage >= 6.0:
+        voltage = 6.0
         RPM = 230
     print "RPM = " + str(RPM) + " for PWM = " + str(PWM) + " and voltage = " + str(voltage)
     return RPM
