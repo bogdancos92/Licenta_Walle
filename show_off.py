@@ -62,6 +62,7 @@ def compute_RPM():
     else if voltage >= 6:
         voltage = 6
         RPM = 230
+    print "RPM = " + RPM + " for PWM = " + PWM
     return RPM
 
 def compute_timer():
@@ -71,6 +72,7 @@ def compute_timer():
     # RPM rotations ... 60 sec
     # x = 120 sec / RPM
     time = 120/RPM * surface_coef
+    print "Time to spin" + time
     return time
 
 #main function for motor control
@@ -104,14 +106,12 @@ def main():
         print "stop"
         sleep(2)
         timer = compute_timer()
-        print "Rotating for " + timer
         right(timer)
         stop()
         print "Now wait 3 sec"
         sleep(3)
+        PWM = 80
         timer = compute_timer()
-        print timer
-        print "Rotating for " + timer
         left(timer)
         print "Now wait 3 sec"
         stop()
