@@ -13,7 +13,14 @@ RIGHT_NEG 	= 21
 PWM_RIGHT 	= 26
 
 #PWM factor
-PWM = 100
+PWM = 50
+
+#surface coefficient
+surface_coef = 1
+
+#wheeldiameter
+wheel_diameter = 65 #mm
+
 
 #setup
 GPIO.setmode(GPIO.BCM)
@@ -35,6 +42,37 @@ p2 = GPIO.PWM(PWM_RIGHT,500)
 p1.start(PWM)
 p2.start(PWM)
 
+def map(x, in_min, in_max, out_min, out_max):
+    value = (x - in_min) * (out_max - out_min) / (in_max - in_min) + out_min
+    return value
+
+
+def compute_RPM():
+    #3V...125RPM
+    #5V...200RPM
+    #6V...230RPM
+    voltage = map(PWM, 0, 100, 0, 6)
+    if voltage < 3:
+        voltage = 3
+        RPM = 125
+    else if voltage >= 3 and voltage < 5:
+        RPM = map (voltage, 3, 5 , 125, 200)
+    else if voltage >=5 and voltage < 6:
+        RPM = map (voltage, 5, 6 , 200, 230)
+    else if voltage >= 6:
+        voltage = 6
+        RPM = 230
+    return RPM
+
+def compute_timer():
+    RPM = compute_RPM()
+    #distance to move 130mm = 2 rotations
+    # 2 rotations   ... x sec
+    # RPM rotations ... 60 sec
+    # x = 120 sec / RPM
+    time = 120/RPM * surface_coef
+    return time
+
 #main function for motor control
 def set_motor(A1,A2,B1,B2,timer):
     GPIO.output(LEFT_POZ,A1)
@@ -45,38 +83,42 @@ def set_motor(A1,A2,B1,B2,timer):
 
 #direction control functions
 def stop():
-	set_motor(0,0,0,0,0)
+    set_motor(0,0,0,0,0)
 
 def forward(timer):
-	set_motor(1,0,0,1,timer)
+    set_motor(1,0,0,1,timer)
 
 def reverse(timer):
-	set_motor(0,1,1,0,timer)
+    set_motor(0,1,1,0,timer)
 
 def left(timer):
-	set_motor(1,0,0,0,timer)
+    set_motor(1,0,1,0,timer)
 
 def right(timer):
-	set_motor(0,0,0,1,timer)
+    set_motor(0,1,0,1,timer)
 
-def rotate(timer):
-	set_motor(1,0,1,0,timer)
-
-#kind of a maine function
-def functie():
+#kind of a main function
+def main():
     if True:
-	stop()
-	print "stop"
-	sleep(0.5)
-    	forward(2)
-	right(1)
-	rotate(2)
-	left(1)
-	reverse(1)
-    	sleep(1)
-    	print "Thats all folks"
-   	GPIO.cleanup()
-	sleep(1)
+        stop()
+        print "stop"
+        sleep(2)
+        timer = compute_timer()
+        print "Rotating for " + timer
+        right(timer)
+        stop()
+        print "Now wait 3 sec"
+        sleep(3)
+        timer = compute_timer()
+        print timer
+        print "Rotating for " + timer
+        left(timer)
+        print "Now wait 3 sec"
+        stop()
+        sleep(3)
+        print "Thats all folks"
+        GPIO.cleanup()
+        sleep(1)
 
 
-functie()
+main()
