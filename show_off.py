@@ -42,6 +42,10 @@ p2 = GPIO.PWM(PWM_RIGHT,500)
 p1.start(PWM)
 p2.start(PWM)
 
+def set_PWM(value):
+    p1.ChangeDutyCycle(value)
+    p2.ChangeDutyCycle(value)
+
 def map(x, in_min, in_max, out_min, out_max):
     value = (x - in_min) * (out_max - out_min) / (in_max - in_min) + out_min
     return value
@@ -109,7 +113,7 @@ def main():
         right(timer)
         stop()
         print "Now wait 3 sec"
-        PWM = 80
+        set_PWM(80)
         sleep(3)        
         timer = compute_timer()
         left(timer)
