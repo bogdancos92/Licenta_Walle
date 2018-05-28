@@ -16,7 +16,7 @@ PWM_RIGHT 	= 26
 PWM = 50
 
 #surface coefficient
-surface_coef = 1
+surface_coef = 1.0
 
 #wheeldiameter
 wheel_diameter = 65 #mm
@@ -71,7 +71,7 @@ def compute_timer():
     # 2 rotations   ... x sec
     # RPM rotations ... 60 sec
     # x = 120 sec / RPM
-    time = 120/RPM * surface_coef
+    time = 120.0/RPM * surface_coef
     print "Time to spin" + str(time)
     return time
 
@@ -109,8 +109,8 @@ def main():
         right(timer)
         stop()
         print "Now wait 3 sec"
-        sleep(3)
         PWM = 80
+        sleep(3)        
         timer = compute_timer()
         left(timer)
         print "Now wait 3 sec"
