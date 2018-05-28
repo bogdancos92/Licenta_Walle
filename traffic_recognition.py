@@ -3,7 +3,7 @@ import numpy as np
 import time
 from imutils.perspective import four_point_transform
 #from imutils import contours
-#import imutils
+import imutils
 
 camera = cv2.VideoCapture(0)
 
@@ -23,14 +23,14 @@ def findTrafficSign():
         if not grabbed:
             print("No input image")
             break
-        
+
         frame = imutils.resize(frame, width=500)
         frameArea = frame.shape[0]*frame.shape[1]
-        
+
         # convert color image to HSV color scheme
         hsv = cv2.cvtColor(frame, cv2.COLOR_BGR2HSV)
-        
-        # define kernel for smoothing   
+
+        # define kernel for smoothing
         kernel = np.ones((3,3),np.uint8)
         # extract binary image with active blue regions
         mask = cv2.inRange(hsv, lower_blue, upper_blue)
@@ -40,14 +40,14 @@ def findTrafficSign():
 
         # find contours in the mask
         cnts = cv2.findContours(mask.copy(), cv2.RETR_EXTERNAL, cv2.CHAIN_APPROX_SIMPLE)[-2]
-        
+
         # defite string variable to hold detected sign description
         detectedTrafficSign = None
-        
+
         # define variables to hold values during loop
         largestArea = 0
         largestRect = None
-        
+
         # only proceed if at least one contour was found
         if len(cnts) > 0:
             for cnt in cnts:
@@ -60,7 +60,7 @@ def findTrafficSign():
                 rect = cv2.minAreaRect(cnt)
                 box = cv2.boxPoints(rect)
                 box = np.int0(box)
-                
+
                 # count euclidian distance for each side of the rectangle
                 sideOne = np.linalg.norm(box[0]-box[1])
                 sideTwo = np.linalg.norm(box[0]-box[3])
@@ -70,19 +70,19 @@ def findTrafficSign():
                 if area > largestArea:
                     largestArea = area
                     largestRect = box
-            
+
 
         # draw contour of the found rectangle on the original image
         if largestArea > frameArea*0.02:
             cv2.drawContours(frame,[largestRect],0,(0,0,255),2)
-            
+
             #if largestRect is not None:
             # cut and warp interesting area
             warped = four_point_transform(mask, [largestRect][0])
-            
+
             # show an image if rectangle was found
             #cv2.imshow("Warped", cv2.bitwise_not(warped))
-            
+
             # use function to detect the sign on the found rectangle
             detectedTrafficSign = identifyTrafficSign(warped)
             #print(detectedTrafficSign)
@@ -90,10 +90,10 @@ def findTrafficSign():
 
             # write the description of the sign on the original image
             cv2.putText(frame, detectedTrafficSign, tuple(largestRect[0]), cv2.FONT_HERSHEY_SIMPLEX, 0.65, (0, 255, 0), 2)
-        
+
         # show original image
         cv2.imshow("Original", frame)
-        
+
         # if the `q` key was pressed, break from the loop
         if cv2.waitKey(1) & 0xFF is ord('q'):
             cv2.destroyAllWindows()
@@ -116,7 +116,7 @@ def identifyTrafficSign(image):
     }
 
     THRESHOLD = 150
-    
+
     image = cv2.bitwise_not(image)
     # (roiH, roiW) = roi.shape
     #subHeight = thresh.shape[0]/10

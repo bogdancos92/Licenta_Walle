@@ -13,7 +13,7 @@ RIGHT_NEG 	= 21
 PWM_RIGHT 	= 26
 
 #PWM factor
-PWM = 80
+PWM = 100
 
 #setup
 GPIO.setmode(GPIO.BCM)
@@ -45,19 +45,19 @@ def set_motor(A1,A2,B1,B2,timer):
 
 #direction control functions
 def stop():
-    set_motor(0,0,0,0,0)
+	set_motor(0,0,0,0,0)
 
 def forward(timer):
-    set_motor(1,0,0,1,timer)
+	set_motor(1,0,0,1,timer)
 
 def reverse(timer):
-    set_motor(0,1,1,0,timer)
+	set_motor(0,1,1,0,timer)
 
 def left(timer):
-    set_motor(1,0,0,0,timer)
+	set_motor(1,0,0,0,timer)
 
 def right(timer):
-    set_motor(0,0,0,1,timer)
+	set_motor(0,0,0,1,timer)
 
 def rotate(timer):
 	set_motor(1,0,1,0,timer)
@@ -65,25 +65,18 @@ def rotate(timer):
 #kind of a maine function
 def functie():
     if True:
-		sleep(0.5)
-		stop()
-		print "stop"
-		sleep(0.5)
+	stop()
+	print "stop"
+	sleep(0.5)
     	forward(2)
-    	print "fwd 2"
-    	rotate(2)
-    	print "rotate 2"
-		forward(2)
-		print "fwd 2"
-		rotate(2)
-    	print "rotate 2"
-    	left(2)
-    	print "left 1"
-    	right(2)
-    	print "right 2"
-    	sleep(2)
+	right(1)
+	rotate(2)
+	left(1)
+	reverse(1)
+    	sleep(1)
     	print "Thats all folks"
    	GPIO.cleanup()
+	sleep(1)
 
 
 functie()
