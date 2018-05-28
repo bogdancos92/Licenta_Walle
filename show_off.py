@@ -45,6 +45,7 @@ def set_PWM(value):
     p2.ChangeDutyCycle(value)
 
 def map(x, in_min, in_max, out_min, out_max):
+    value = 0.0
     value = (x - in_min) * (out_max - out_min) / (in_max - in_min) + out_min
     return value
 
