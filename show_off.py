@@ -16,11 +16,7 @@ PWM_RIGHT 	= 26
 PWM = 50
 
 #surface coefficient
-surface_coef = 1.0
-
-#wheeldiameter
-wheel_diameter = 65 #mm
-
+surface_coef = 0.8
 
 #setup
 GPIO.setmode(GPIO.BCM)
@@ -43,6 +39,8 @@ p1.start(PWM)
 p2.start(PWM)
 
 def set_PWM(value):
+    global PWM
+    PWM = value
     p1.ChangeDutyCycle(value)
     p2.ChangeDutyCycle(value)
 
