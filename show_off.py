@@ -64,7 +64,7 @@ def compute_RPM():
     elif voltage >= 6:
         voltage = 6
         RPM = 230
-    print "RPM = " + str(RPM) + " for PWM = " + str(PWM)
+    print "RPM = " + str(RPM) + " for PWM = " + str(PWM) + " and voltage = " + str(voltage)
     return RPM
 
 def compute_timer():
