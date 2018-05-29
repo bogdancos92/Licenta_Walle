@@ -145,11 +145,15 @@ def calibrate():
     minimum_distance = initial_distance - tolerance
     maximum_distance = initial_distance + tolerance
 
+    print "Initial distance is " + str(initial_distance)
+
     right()
 
     #set start time
     StartTime = time.time()
     StopTime = time.time()
+
+    sleep(0.5)
 
     while True:
         current_measurement = distance.compute(GPIO_TRIGGER_FRONT, GPIO_ECHO_FRONT)
