@@ -24,6 +24,7 @@ GPIO_ECHO_SIDE      = 23
 
 #PWM factor
 PWM = 0
+PWM_FOR_TURNING = 80
 
 #surface coefficient
 surface_coef = 0.8
@@ -33,7 +34,7 @@ tolerance = 1
 
 #setup
 GPIO.setmode(GPIO.BCM)
-GPIO.setwarnings(True)
+GPIO.setwarnings(False)
 
 #left motor setup
 GPIO.setup(LEFT_POZ,GPIO.OUT)
@@ -126,11 +127,11 @@ def reverse():
 
 def left():
     set_motor(1,0,1,0)
-    set_PWM(50)
+    set_PWM(PWM_FOR_TURNING)
 
 def right():
     set_motor(0,1,0,1)
-    set_PWM(50)
+    set_PWM(PWM_FOR_TURNING)
 
 #attempt to calibrate surface sensor
 def calibrate():
@@ -158,7 +159,7 @@ def calibrate():
             break
 
     TimeElapsed = StopTime - StartTime
-    set_PWM(50)
+    set_PWM(PWM_FOR_TURNING)
     EngineeredTime = compute_timer()
     EngineeredTime *= 4
     set_PWM(0)
@@ -174,7 +175,7 @@ def main():
     if True:
         calibrate()
         sleep(1)
-        set_PWM(50)
+        set_PWM(PWM_FOR_TURNING)
         turn_time = compute_timer()
         set_PWM(0)
         turn_time *= surface_coef
