@@ -162,6 +162,8 @@ def calibrate():
             StopTime = time.time()
             break
 
+    print "Final distance is " + str(current_measurement)
+
     TimeElapsed = StopTime - StartTime
     set_PWM(PWM_FOR_TURNING)
     EngineeredTime = compute_timer()
