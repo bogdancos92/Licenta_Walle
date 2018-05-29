@@ -136,9 +136,9 @@ def right():
 def calibrate():
     global surface_coef
     #get initial reference
-    initial_distance = distance.compute()
-    initial_distance += distance.compute()
-    initial_distance += distance.compute()
+    initial_distance = distance.compute(GPIO_TRIGGER_FRONT, GPIO_ECHO_FRONT)
+    initial_distance += distance.compute(GPIO_TRIGGER_FRONT, GPIO_ECHO_FRONT)
+    initial_distance += distance.compute(GPIO_TRIGGER_FRONT, GPIO_ECHO_FRONT)
     initial_distance /= 3
 
     minimum_distance = initial_distance - tolerance
@@ -151,7 +151,7 @@ def calibrate():
     StopTime = time.time()
 
     while True:
-        current_measurement = distance.compute()
+        current_measurement = distance.compute(GPIO_TRIGGER_FRONT, GPIO_ECHO_FRONT)
         if current_measurement >= minimum_distance and current_measurement <= maximum_distance:
             stop()
             StopTime = time.time()
