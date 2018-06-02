@@ -107,7 +107,7 @@ def compute_RPM():
     elif voltage >= 6.0:
         voltage = 6.0
         RPM = 230
-    # print 'RPM = ' + str(RPM) + ' for PWM = ' + str(PWM) + ' and voltage = ' + str(voltage)
+    print('RPM = ' + str(RPM) + ' for PWM = ' + str(PWM) + ' and voltage = ' + str(voltage))
     return RPM
 
 #compute time needed to spin 90 degrees
@@ -119,7 +119,7 @@ def compute_timer():
     # RPM rotations     ... 60 sec
     # x = 0.637 * 60 sec / RPM
     time = ((0.637 * 60)/RPM) * surface_coef
-    print 'Time to spin' + str(time)
+    print ('Time to spin' + str(time))
     return time
 
 #main function for motor control
@@ -201,7 +201,7 @@ def calibrate():
 #kind of a main function
 def main():
 
-    print 'Ok get ready in 5 sec'
+    print('Ok get ready in 5 sec')
     sleep(5)
     
     try:
@@ -239,7 +239,7 @@ def main():
                         right(timer)
                         break
     
-            print message    
+            print(message)
     
     # Reset by pressing CTRL + C
     except KeyboardInterrupt:
