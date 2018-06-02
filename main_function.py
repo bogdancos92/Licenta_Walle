@@ -3,7 +3,7 @@ import RPi.GPIO as GPIO
 from time import sleep
 import time
 import distance
-import traffic_recognition as signs
+import traffic_recognition
 
 #setting left engine pins
 LEFT_POZ 	= 6
@@ -220,7 +220,7 @@ def main():
                     break
         
             while True:
-                text = signs.findTrafficSign(camera, lower_blue, upper_blue)
+                text = traffic_recognition.findTrafficSign(camera, lower_blue, upper_blue)
                 message = ".................................."
                 if text in TRAFFIC_SIGNS:
                     message = "Found sign " + text

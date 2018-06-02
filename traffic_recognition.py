@@ -19,7 +19,7 @@ def findTrafficSign(camera, lower_blue, upper_blue):
     (grabbed, frame) = camera.read()
     if not grabbed:
         print("No input image")
-        break
+        return None
 
     frame = imutils.resize(frame, width=500)
     frameArea = frame.shape[0]*frame.shape[1]
