@@ -96,6 +96,7 @@ def compute_RPM():
     #5V...200RPM
     #6V...230RPM
     voltage = map(PWM, 0, 100, 0.0, 6.0)
+    RPM = 0
     if voltage < 3.0:
         voltage = 3.0
         RPM = 125
