@@ -3,6 +3,7 @@ import RPi.GPIO as GPIO
 from time import sleep
 import time
 import distance
+import traffic_recognition as signs
 
 #setting left engine pins
 LEFT_POZ 	= 6
@@ -24,13 +25,23 @@ GPIO_ECHO_SIDE      = 23
 
 #PWM factor
 PWM = 0
-PWM_FOR_TURNING = 50
+PWM_FOR_TURNING = 65
 
 #surface coefficient
-surface_coef = 0.8
+surface_coef = 1.0
 
 #tolerance for distance calibration
 tolerance = 1
+
+#distance from sign
+distance_from_sign = 20 #cm
+
+TRAFFIC_SIGNS = [
+        'Turn Right', # turnRight
+        'Turn Left', # turnLeft
+        'Move Straight', # moveStraight
+        'Turn Back', # turnBack
+    ]
 
 #setup
 GPIO.setmode(GPIO.BCM)
@@ -60,6 +71,10 @@ p2.start(PWM)
 
 #let the setup settle
 time.sleep(2)
+
+# define range HSV for blue color of the traffic sign
+lower_blue = np.array([85,100,70])
+upper_blue = np.array([115,255,255])
 
 def set_PWM(value):
     global PWM
@@ -100,7 +115,7 @@ def compute_timer():
     # 0.637 rotations   ... x sec
     # RPM rotations     ... 60 sec
     # x = 0.637 * 60 sec / RPM
-    time = ((0.637 * 60)/RPM)
+    time = ((0.637 * 60)/RPM) * surface_coef
     print "Time to spin" + str(time)
     return time
 
@@ -125,13 +140,17 @@ def reverse():
     set_motor(0,1,1,0)
     set_PWM(55)
 
-def left():
+def left(timer):
     set_motor(1,0,1,0)
     set_PWM(PWM_FOR_TURNING)
+    sleep(timer)
+    stop()
 
-def right():
+def right(timer):
     set_motor(0,1,0,1)
     set_PWM(PWM_FOR_TURNING)
+    sleep(timer)
+    stop()
 
 #attempt to calibrate surface sensor
 def calibrate():
@@ -178,20 +197,46 @@ def calibrate():
 
 #kind of a main function
 def main():
-    if True:
-        calibrate()
-        sleep(1)
-        set_PWM(PWM_FOR_TURNING)
-        turn_time = compute_timer()
-        set_PWM(0)
-        turn_time *= surface_coef
-        print "Turn for " + str(turn_time)
-        sleep(1)
-        right()
-        sleep(turn_time)
-        stop()
-        print "Thats all folks"
-        GPIO.cleanup()
-        sleep(1)
+    
+    while True:
+    #Start car
+        forward()
+        
+        #calculate distance from sign
+        remaining_distance = distance.compute(GPIO_TRIGGER_FRONT, GPIO_ECHO_FRONT)
+        
+        #while distance is less than the desired distance, keep going
+        while remaining_distance > distance_from_sign:
+            remaining_distance = distance.compute(GPIO_TRIGGER_FRONT, GPIO_ECHO_FRONT)
+            if remaining_distance < distance_from_sign:
+                stop()
+                break
+    
+        while True:
+            text = signs.findTrafficSign(lower_blue, upper_blue)
+            message = ".................................."
+            if text in TRAFFIC_SIGNS:
+                message = "Found sign " + text
+                timer = compute_timer()
+                if text is 'Turn Right':
+                    right(timer)
+                    break
+                elif text is 'Turn Left':
+                    left(timer)
+                    break
+                elif text is 'Move Straight':
+                    break
+                elif text is 'Turn Back':
+                    timer *= 2
+                    right(timer)
+                    break
+
+        print message    
+    
+        # Reset by pressing CTRL + C
+        except KeyboardInterrupt:
+            print("Autonomus driving stopped")
+            set_PWM(0)
+            GPIO.cleanup()
 
 main()
