@@ -76,6 +76,8 @@ time.sleep(2)
 lower_blue = np.array([85,100,70])
 upper_blue = np.array([115,255,255])
 
+camera = cv2.VideoCapture(0)
+
 def set_PWM(value):
     global PWM
     PWM = value
@@ -213,7 +215,7 @@ def main():
                 break
     
         while True:
-            text = signs.findTrafficSign(lower_blue, upper_blue)
+            text = signs.findTrafficSign(camera, lower_blue, upper_blue)
             message = ".................................."
             if text in TRAFFIC_SIGNS:
                 message = "Found sign " + text

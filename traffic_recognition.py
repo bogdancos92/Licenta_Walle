@@ -5,9 +5,7 @@ from imutils.perspective import four_point_transform
 #from imutils import contours
 import imutils
 
-camera = cv2.VideoCapture(0)
-
-def findTrafficSign(lower_blue, upper_blue):
+def findTrafficSign(camera, lower_blue, upper_blue):
     '''
     This function find blobs with blue color on the image.
     After blobs were found it detects the largest square blob, that must be the sign.
