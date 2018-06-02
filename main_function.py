@@ -36,7 +36,7 @@ surface_coef = 1.0
 tolerance = 1
 
 #distance from sign
-distance_from_sign = 25 #cm
+distance_from_sign = 27 #cm
 
 TRAFFIC_SIGNS = [
         'Turn Right', # turnRight
