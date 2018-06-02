@@ -83,7 +83,7 @@ def findTrafficSign(camera, lower_blue, upper_blue):
         #cv2.imshow("Warped", cv2.bitwise_not(warped))
         # use function to detect the sign on the found rectangle
         detectedTrafficSign = identifyTrafficSign(warped)
-        print 'Found the \"' + detectedTrafficSign + 'sign'
+        print 'Found the ' + detectedTrafficSign + ' sign'
         return detectedTrafficSign
 
     return "Traffic sign not found"
