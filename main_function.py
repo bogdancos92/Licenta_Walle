@@ -227,6 +227,7 @@ def main():
                 message = '..................................'
                 if text in TRAFFIC_SIGNS:
                     message = 'Found sign ' + text
+                    set_PWM(PWM_FOR_TURNING)
                     timer = compute_timer()
                     if text is 'Turn Right':
                         right(timer)
