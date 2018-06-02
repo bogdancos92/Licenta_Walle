@@ -167,7 +167,7 @@ def calibrate():
     minimum_distance = initial_distance - tolerance
     maximum_distance = initial_distance + tolerance
 
-    print 'Initial distance is ' + str(initial_distance)
+    print ('Initial distance is ' + str(initial_distance))
 
     left()
 
@@ -184,7 +184,7 @@ def calibrate():
             StopTime = time.time()
             break
 
-    print 'Final distance is ' + str(current_measurement)
+    print ('Final distance is ' + str(current_measurement))
 
     TimeElapsed = StopTime - StartTime
     set_PWM(PWM_FOR_TURNING)
@@ -192,11 +192,11 @@ def calibrate():
     EngineeredTime *= 4
     set_PWM(0)
 
-    print str(TimeElapsed) + ' should be equal to ' + str(EngineeredTime)
+    print (str(TimeElapsed) + ' should be equal to ' + str(EngineeredTime))
 
     surface_coef = TimeElapsed/EngineeredTime
 
-    print 'Surface coeficient is ' + str(surface_coef)
+    print ('Surface coeficient is ' + str(surface_coef))
 
 #kind of a main function
 def main():
