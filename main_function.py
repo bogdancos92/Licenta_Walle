@@ -4,6 +4,7 @@ from time import sleep
 import time
 import distance
 import traffic_recognition
+import numpy as np
 
 #setting left engine pins
 LEFT_POZ 	= 6
