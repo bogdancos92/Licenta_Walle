@@ -24,7 +24,7 @@ GPIO_ECHO_SIDE      = 23
 
 #PWM factor
 PWM = 0
-PWM_FOR_TURNING = 30
+PWM_FOR_TURNING = 15
 
 #surface coefficient
 surface_coef = 0.8
@@ -147,7 +147,7 @@ def calibrate():
 
     print "Initial distance is " + str(initial_distance)
 
-    right()
+    left()
 
     #set start time
     StartTime = time.time()
