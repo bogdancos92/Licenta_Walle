@@ -41,7 +41,7 @@ def findTrafficSign(camera, lower_blue, upper_blue):
     cnts = cv2.findContours(mask.copy(), cv2.RETR_EXTERNAL, cv2.CHAIN_APPROX_SIMPLE)[-2]
 
     # defite string variable to hold detected sign description
-    detectedTrafficSign = None
+    detectedTrafficSign = "None"
 
     # define variables to hold values during loop
     largestArea = 0

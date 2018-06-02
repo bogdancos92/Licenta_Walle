@@ -27,7 +27,7 @@ GPIO_ECHO_SIDE      = 23
 
 #PWM factor
 PWM = 0
-PWM_FOR_TURNING = 65
+PWM_FOR_TURNING = 55
 
 #surface coefficient
 surface_coef = 1.0
@@ -36,7 +36,7 @@ surface_coef = 1.0
 tolerance = 1
 
 #distance from sign
-distance_from_sign = 20 #cm
+distance_from_sign = 25 #cm
 
 TRAFFIC_SIGNS = [
         'Turn Right', # turnRight
@@ -139,7 +139,7 @@ def stop():
 
 def forward():
     set_motor(1,0,0,1)
-    set_PWM(80)
+    set_PWM(55)
 
 def reverse():
     set_motor(0,1,1,0)
