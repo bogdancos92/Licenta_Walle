@@ -30,7 +30,7 @@ PWM = 0
 PWM_FOR_TURNING = 55
 
 #surface coefficient
-surface_coef = 1.0
+surface_coef = 5.0
 
 #tolerance for distance calibration
 tolerance = 1
@@ -148,12 +148,14 @@ def reverse():
 def left(timer):
     set_motor(1,0,1,0)
     set_PWM(PWM_FOR_TURNING)
+    print("Turning right")
     sleep(timer)
     stop()
 
 def right(timer):
     set_motor(0,1,0,1)
     set_PWM(PWM_FOR_TURNING)
+    print("Turning right")
     sleep(timer)
     stop()
 
@@ -203,8 +205,8 @@ def calibrate():
 #kind of a main function
 def main():
 
-    print('Ok get ready in 5 sec')
-    sleep(5)
+    print('Ok get ready in 3 sec')
+    sleep(3)
     
     try:
         while True:
