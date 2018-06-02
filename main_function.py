@@ -24,7 +24,7 @@ GPIO_ECHO_SIDE      = 23
 
 #PWM factor
 PWM = 0
-PWM_FOR_TURNING = 80
+PWM_FOR_TURNING = 100
 
 #surface coefficient
 surface_coef = 0.8
