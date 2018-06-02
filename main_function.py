@@ -119,7 +119,7 @@ def compute_timer():
     # RPM rotations     ... 60 sec
     # x = 0.637 * 60 sec / RPM
     time = ((0.637 * 60)/RPM) * surface_coef
-    print "Time to spin" + str(time)
+    print 'Time to spin' + str(time)
     return time
 
 #main function for motor control
@@ -167,7 +167,7 @@ def calibrate():
     minimum_distance = initial_distance - tolerance
     maximum_distance = initial_distance + tolerance
 
-    print "Initial distance is " + str(initial_distance)
+    print 'Initial distance is ' + str(initial_distance)
 
     left()
 
@@ -184,7 +184,7 @@ def calibrate():
             StopTime = time.time()
             break
 
-    print "Final distance is " + str(current_measurement)
+    print 'Final distance is ' + str(current_measurement)
 
     TimeElapsed = StopTime - StartTime
     set_PWM(PWM_FOR_TURNING)
@@ -192,16 +192,16 @@ def calibrate():
     EngineeredTime *= 4
     set_PWM(0)
 
-    print str(TimeElapsed) + " should be equal to " + str(EngineeredTime)
+    print str(TimeElapsed) + ' should be equal to ' + str(EngineeredTime)
 
     surface_coef = TimeElapsed/EngineeredTime
 
-    print "Surface coeficient is " + str(surface_coef)
+    print 'Surface coeficient is ' + str(surface_coef)
 
 #kind of a main function
 def main():
 
-    print "Ok get ready in 5 sec"
+    print 'Ok get ready in 5 sec'
     sleep(5)
     
     try:
@@ -222,9 +222,9 @@ def main():
         
             while True:
                 text = traffic_recognition.findTrafficSign(camera, lower_blue, upper_blue)
-                message = ".................................."
+                message = '..................................'
                 if text in TRAFFIC_SIGNS:
-                    message = "Found sign " + text
+                    message = 'Found sign ' + text
                     timer = compute_timer()
                     if text is 'Turn Right':
                         right(timer)
@@ -243,7 +243,7 @@ def main():
     
     # Reset by pressing CTRL + C
     except KeyboardInterrupt:
-        print("Autonomus driving stopped")
+        print('Autonomus driving stopped')
         set_PWM(0)
         GPIO.cleanup()
 
