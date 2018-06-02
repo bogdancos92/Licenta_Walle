@@ -107,7 +107,7 @@ def compute_RPM():
     elif voltage >= 6.0:
         voltage = 6.0
         RPM = 230
-    print "RPM = " + str(RPM) + " for PWM = " + str(PWM) + " and voltage = " + str(voltage)
+    print 'RPM = ' + str(RPM) + ' for PWM = ' + str(PWM) + ' and voltage = ' + str(voltage)
     return RPM
 
 #compute time needed to spin 90 degrees
