@@ -203,45 +203,47 @@ def main():
     print "Ok get ready in 5 sec"
     sleep(5)
     
-    while True:
-    #Start car
-        forward()
-        
-        #calculate distance from sign
-        remaining_distance = distance.compute(GPIO_TRIGGER_FRONT, GPIO_ECHO_FRONT)
-        
-        #while distance is less than the desired distance, keep going
-        while remaining_distance > distance_from_sign:
-            remaining_distance = distance.compute(GPIO_TRIGGER_FRONT, GPIO_ECHO_FRONT)
-            if remaining_distance < distance_from_sign:
-                stop()
-                break
-    
+    try:
         while True:
-            text = signs.findTrafficSign(camera, lower_blue, upper_blue)
-            message = ".................................."
-            if text in TRAFFIC_SIGNS:
-                message = "Found sign " + text
-                timer = compute_timer()
-                if text is 'Turn Right':
-                    right(timer)
+        
+            #Start car
+            forward()
+            
+            #calculate distance from sign
+            remaining_distance = distance.compute(GPIO_TRIGGER_FRONT, GPIO_ECHO_FRONT)
+            
+            #while distance is less than the desired distance, keep going
+            while remaining_distance > distance_from_sign:
+                remaining_distance = distance.compute(GPIO_TRIGGER_FRONT, GPIO_ECHO_FRONT)
+                if remaining_distance < distance_from_sign:
+                    stop()
                     break
-                elif text is 'Turn Left':
-                    left(timer)
-                    break
-                elif text is 'Move Straight':
-                    break
-                elif text is 'Turn Back':
-                    timer *= 2
-                    right(timer)
-                    break
-
-        print message    
+        
+            while True:
+                text = signs.findTrafficSign(camera, lower_blue, upper_blue)
+                message = ".................................."
+                if text in TRAFFIC_SIGNS:
+                    message = "Found sign " + text
+                    timer = compute_timer()
+                    if text is 'Turn Right':
+                        right(timer)
+                        break
+                    elif text is 'Turn Left':
+                        left(timer)
+                        break
+                    elif text is 'Move Straight':
+                        break
+                    elif text is 'Turn Back':
+                        timer *= 2
+                        right(timer)
+                        break
     
-        # Reset by pressing CTRL + C
-        except KeyboardInterrupt:
-            print("Autonomus driving stopped")
-            set_PWM(0)
-            GPIO.cleanup()
+            print message    
+    
+    # Reset by pressing CTRL + C
+    except KeyboardInterrupt:
+        print("Autonomus driving stopped")
+        set_PWM(0)
+        GPIO.cleanup()
 
 main()
