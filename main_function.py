@@ -24,7 +24,7 @@ GPIO_ECHO_SIDE      = 23
 
 #PWM factor
 PWM = 0
-PWM_FOR_TURNING = 60
+PWM_FOR_TURNING = 50
 
 #surface coefficient
 surface_coef = 0.8
@@ -53,8 +53,8 @@ GPIO.setup(GPIO_TRIGGER_SIDE, GPIO.OUT)
 GPIO.setup(GPIO_ECHO_SIDE, GPIO.IN)
 
 #frequency setup
-p1 = GPIO.PWM(PWM_LEFT,500)
-p2 = GPIO.PWM(PWM_RIGHT,500)
+p1 = GPIO.PWM(PWM_LEFT,50)
+p2 = GPIO.PWM(PWM_RIGHT,50)
 p1.start(PWM)
 p2.start(PWM)
 
