@@ -199,6 +199,9 @@ def calibrate():
 
 #kind of a main function
 def main():
+
+    print "Ok get ready in 5 sec"
+    sleep(5)
     
     while True:
     #Start car
