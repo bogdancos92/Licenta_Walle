@@ -244,18 +244,23 @@ def main():
                             timer = compute_timer()
                             if text is 'Turn Right':
                                 right(timer)
+                                print("Car should have turned right by now")
                                 break
                             elif text is 'Turn Left':
                                 left(timer)
+                                print("Car should have turned left by now")
                                 break
                             elif text is 'Move Straight':
+                                print("Car shouldn't do anything")
                                 break
                             elif text is 'Turn Back':
                                 timer *= 2.0
                                 right(timer)
+                                print("Car should have turned back by now")
                                 break
             
-                    print(message)
+                        print(message)
+
             # Reset by pressing CTRL + C
             except KeyboardInterrupt:
                 set_PWM(0)
