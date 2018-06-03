@@ -218,12 +218,6 @@ def main():
             try:
 
                 while True:
-                    
-                    print("Wait a bit")
-                    sleep(2)
-                    
-                    remaining_distance = 0.0
-                    
                     #Start car
                     forward()
                     
