@@ -138,6 +138,7 @@ def set_motor(A1,A2,B1,B2):
 def stop():
     set_motor(0,0,0,0)
     set_PWM(0)
+    print("Fucking stop")
 
 def forward():
     set_motor(1,0,0,1)
@@ -218,6 +219,7 @@ def main():
             try:
 
                 while True:
+                    sleep(1)
                     #Start car
                     forward()
                     
