@@ -277,6 +277,7 @@ def main():
         print("Arguments are " + sys.argv[1] + " " + sys.argv[2])
         arg1 = str(sys.argv[1])
         arg2 = str(sys.argv[2])
+        print(arg1)
         if arg1 is 'test':
             print("Testin in 2")
             sleep(2)
