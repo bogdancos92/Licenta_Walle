@@ -133,16 +133,6 @@ def set_motor(A1,A2,B1,B2):
     GPIO.output(RIGHT_POZ,B1)
     GPIO.output(RIGHT_NEG,B2)
     # sleep(timer)
-
-#get to target PWM slow
-def ramp(target):
-    global PWM
-    PWM = 40
-    set_PWM(PWM)
-    while PWM < target:
-        PWM += 5
-        set_PWM(PWM)
-        sleep(0.2)
         
 #direction control functions
 def stop():
@@ -151,11 +141,11 @@ def stop():
 
 def forward():
     set_motor(1,0,0,1)
-    ramp(PWM_FOR_STRAIGHT)
+    set_PWM(PWM_FOR_STRAIGHT)
 
 def reverse():
     set_motor(0,1,1,0)
-    ramp(PWM_FOR_STRAIGHT)
+    set_PWM(PWM_FOR_STRAIGHT)
 
 def left(timer):
     set_motor(1,0,1,0)
