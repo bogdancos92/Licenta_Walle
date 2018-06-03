@@ -147,14 +147,14 @@ def reverse():
     set_motor(0,1,1,0)
     set_PWM(PWM_FOR_STRAIGHT)
 
-def left(timer):
+def right(timer):
     set_motor(1,0,1,0)
     set_PWM(PWM_FOR_TURNING)
     print("Turning left")
     sleep(timer)
     stop()
 
-def right(timer):
+def left(timer):
     set_motor(0,1,0,1)
     set_PWM(PWM_FOR_TURNING)
     print("Turning right")
