@@ -278,7 +278,7 @@ def main():
         arg1 = str(sys.argv[1])
         arg2 = str(sys.argv[2])
         print(arg1)
-        if arg1 is 'test':
+        if arg1 is 'testing':
             print("Testin in 2")
             sleep(2)
             global surface_coef
