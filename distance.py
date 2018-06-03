@@ -54,7 +54,7 @@ def compute(Trigger, Echo):
     # and divide by 2, because there and back
     distance = (TimeElapsed * 34300) / 2
     print (distance)
-    time.sleep(0.06)
+    time.sleep(0.08)
 
     #distance in cm
     return distance
