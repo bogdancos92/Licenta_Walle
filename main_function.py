@@ -6,6 +6,7 @@ import distance
 import traffic_recognition
 import numpy as np
 import cv2
+import sys
 
 #setting left engine pins
 LEFT_POZ 	= 6
