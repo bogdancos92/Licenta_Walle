@@ -216,14 +216,17 @@ def calibrate():
 
 #kind of a main function
 def main():
+    global surface_coef
 
     print('Ok get ready in 3 sec')
     sleep(1)
     
-    if len(sys.argv) is 2:
-        if sys.argv[1] is "go":
-            
+    if len(sys.argv) is 3:
+        if sys.argv[1] == 'go':
+            surface_coef = float(sys.argv[2])
+
             try:
+
                 while True:
                     
                     print("Wait a bit")
@@ -258,7 +261,7 @@ def main():
                             elif text is 'Move Straight':
                                 break
                             elif text is 'Turn Back':
-                                timer *= 2
+                                timer *= 2.0
                                 right(timer)
                                 break
             
@@ -273,15 +276,9 @@ def main():
                 print('Autonomus driving stopped')
 
 
-    elif len(sys.argv) is 3:
-        print("Arguments are " + sys.argv[1] + " " + sys.argv[2])
-        arg1 = str(sys.argv[1])
-        arg2 = str(sys.argv[2])
-        print(arg1)
-        if arg1 == 'testing':
+        elif sys.argv[1] == 'testing':
             print("Testin in 2")
-            sleep(2)
-            global surface_coef
+            sleep(2)            
             surface_coef = float(arg2)
             set_PWM(PWM_FOR_TURNING)
             timer = compute_timer()
