@@ -235,7 +235,7 @@ def main():
                             stop()
                             sleep(0.5)
                             reverse()
-                            sleep(0.5)
+                            sleep(0.1)
                             stop()
                             break
                 
