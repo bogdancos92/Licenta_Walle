@@ -275,7 +275,7 @@ def main():
 
     elif len(sys.argv) is 3:
         print("Arguments are " + sys.argv[1] + " " + sys.argv[2])
-        if sys.argv[1] is "test":
+        if sys.argv[1] is 'test':
             print("Testin in 2")
             sleep(2)
             global surface_coef
