@@ -150,7 +150,7 @@ def reverse():
 def left(timer):
     set_motor(1,0,1,0)
     set_PWM(PWM_FOR_TURNING)
-    print("Turning right")
+    print("Turning left")
     sleep(timer)
     stop()
 
@@ -232,6 +232,10 @@ def main():
                     while remaining_distance > distance_from_sign:
                         remaining_distance = distance.compute(GPIO_TRIGGER_FRONT, GPIO_ECHO_FRONT)
                         if remaining_distance < distance_from_sign:
+                            stop()
+                            sleep(0.5)
+                            reverse()
+                            sleep(0.5)
                             stop()
                             break
                 
