@@ -246,12 +246,10 @@ def main():
                             timer = compute_timer()
                             if text == 'Turn Right':
                                 right(timer)
-                                stop()
                                 print("Car should have turned right by now")
                                 break
                             elif text == 'Turn Left':
                                 left(timer)
-                                stop()
                                 print("Car should have turned left by now")
                                 break
                             elif text == 'Move Straight':
@@ -261,7 +259,6 @@ def main():
                             elif text == 'Turn Back':
                                 timer *= 2.0
                                 right(timer)
-                                stop()
                                 print("Car should have turned back by now")
                                 break
             
