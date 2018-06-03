@@ -292,6 +292,8 @@ def main():
             p2.stop()
             GPIO.cleanup()
             print("Test complete")
+        else:
+            print("Fuck this program")
 
 
     
