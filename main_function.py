@@ -233,7 +233,7 @@ def main():
                                 break
             
                         print(message)
-                        sleep(0.2)
+                        sleep(2)
 
             # Reset by pressing CTRL + C
             except KeyboardInterrupt:
