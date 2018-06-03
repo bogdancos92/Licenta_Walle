@@ -275,11 +275,13 @@ def main():
 
     elif len(sys.argv) is 3:
         print("Arguments are " + sys.argv[1] + " " + sys.argv[2])
-        if sys.argv[1] is 'test':
+        arg1 = str(sys.argv[1])
+        arg2 = str(sys.argv[2])
+        if arg1 is 'test':
             print("Testin in 2")
             sleep(2)
             global surface_coef
-            surface_coef = float(sys.argv[2])
+            surface_coef = float(arg2)
             set_PWM(PWM_FOR_TURNING)
             timer = compute_timer()
             right(timer)
