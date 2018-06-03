@@ -127,8 +127,7 @@ def compute_timer():
 def average_distance():
     average = distance.compute(GPIO_TRIGGER_FRONT, GPIO_ECHO_FRONT)
     average += distance.compute(GPIO_TRIGGER_FRONT, GPIO_ECHO_FRONT)
-    average += distance.compute(GPIO_TRIGGER_FRONT, GPIO_ECHO_FRONT)
-    average /= 3
+    average /= 2
     return average
 
 #main function for motor control
