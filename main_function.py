@@ -208,13 +208,17 @@ def calibrate():
 #kind of a main function
 def main():
     global surface_coef
+    global PWM_FOR_TURNING
+    global PWM_FOR_STRAIGHT
 
-    print('Ok get ready in 3 sec')
-    sleep(1)
+    print('Ok get ready')
     
-    if len(sys.argv) is 3:
+    if len(sys.argv) is 5:
         if sys.argv[1] == 'go':
             surface_coef = float(sys.argv[2])
+
+            PWM_FOR_TURNING = int(sys.argv[3])
+            PWM_FOR_STRAIGHT = int(sys.argv[4])
 
             try:
 
@@ -232,6 +236,7 @@ def main():
                         if remaining_distance < distance_from_sign:
                             stop()
                             sleep(1.5)
+                            print("Dam un pic cu spatele")
                             reverse()
                             sleep(0.1)
                             stop()
