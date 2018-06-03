@@ -242,18 +242,18 @@ def main():
                             message = 'Found sign ' + text
                             set_PWM(PWM_FOR_TURNING)
                             timer = compute_timer()
-                            if text is 'Turn Right':
+                            if text == 'Turn Right':
                                 right(timer)
                                 print("Car should have turned right by now")
                                 break
-                            elif text is 'Turn Left':
+                            elif text == 'Turn Left':
                                 left(timer)
                                 print("Car should have turned left by now")
                                 break
-                            elif text is 'Move Straight':
+                            elif text == 'Move Straight':
                                 print("Car shouldn't do anything")
                                 break
-                            elif text is 'Turn Back':
+                            elif text == 'Turn Back':
                                 timer *= 2.0
                                 right(timer)
                                 print("Car should have turned back by now")
