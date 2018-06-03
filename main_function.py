@@ -28,14 +28,11 @@ GPIO_ECHO_SIDE      = 23
 
 #PWM factor
 PWM = 0
-PWM_FOR_TURNING = 70
-PWM_FOR_STRAIGHT = 70
+PWM_FOR_TURNING = 0
+PWM_FOR_STRAIGHT = 0
 
 #surface coefficient
 surface_coef = 1.0
-
-#tolerance for distance calibration
-tolerance = 1
 
 #distance from sign
 distance_from_sign = 30 #cm
@@ -74,7 +71,7 @@ p1.start(PWM)
 p2.start(PWM)
 
 #let the setup settle
-time.sleep(2)
+sleep(2)
 
 # define range HSV for blue color of the traffic sign
 lower_blue = np.array([85,100,70])
@@ -87,6 +84,7 @@ def set_PWM(value):
     PWM = value
     p1.ChangeDutyCycle(PWM)
     p2.ChangeDutyCycle(PWM)
+    sleep(0.1)
 
 #interpolation function
 def map(x, in_min, in_max, out_min, out_max):
@@ -122,9 +120,16 @@ def compute_timer():
     # 0.637 rotations   ... x sec
     # RPM rotations     ... 60 sec
     # x = 0.637 * 60 sec / RPM
-    time = ((0.637 * 60)/RPM) * surface_coef
+    time = ((0.637 * 60.0)/RPM) * surface_coef
     print ('Time to spin' + str(time))
     return time
+
+def average_distance():
+    average = distance.compute(GPIO_TRIGGER_FRONT, GPIO_ECHO_FRONT)
+    average += distance.compute(GPIO_TRIGGER_FRONT, GPIO_ECHO_FRONT)
+    average += distance.compute(GPIO_TRIGGER_FRONT, GPIO_ECHO_FRONT)
+    average /= 3
+    return average
 
 #main function for motor control
 def set_motor(A1,A2,B1,B2):
@@ -132,17 +137,17 @@ def set_motor(A1,A2,B1,B2):
     GPIO.output(LEFT_NEG,A2)
     GPIO.output(RIGHT_POZ,B1)
     GPIO.output(RIGHT_NEG,B2)
-    # sleep(timer)
         
 #direction control functions
 def stop():
     set_motor(0,0,0,0)
     set_PWM(0)
-    print("Fucking stop")
+    print("Stop")
 
 def forward():
     set_motor(1,0,0,1)
     set_PWM(PWM_FOR_STRAIGHT)
+    print("Straight")
 
 def reverse():
     set_motor(0,1,1,0)
@@ -162,48 +167,6 @@ def left(timer):
     sleep(timer)
     stop()
 
-#attempt to calibrate surface sensor
-def calibrate():
-    global surface_coef
-    #get initial reference
-    initial_distance = distance.compute(GPIO_TRIGGER_FRONT, GPIO_ECHO_FRONT)
-    initial_distance += distance.compute(GPIO_TRIGGER_FRONT, GPIO_ECHO_FRONT)
-    initial_distance += distance.compute(GPIO_TRIGGER_FRONT, GPIO_ECHO_FRONT)
-    initial_distance /= 3
-
-    minimum_distance = initial_distance - tolerance
-    maximum_distance = initial_distance + tolerance
-
-    print ('Initial distance is ' + str(initial_distance))
-
-    left()
-
-    #set start time
-    StartTime = time.time()
-    StopTime = time.time()
-
-    sleep(0.5)
-
-    while True:
-        current_measurement = distance.compute(GPIO_TRIGGER_FRONT, GPIO_ECHO_FRONT)
-        if current_measurement >= minimum_distance and current_measurement <= maximum_distance:
-            stop()
-            StopTime = time.time()
-            break
-
-    print ('Final distance is ' + str(current_measurement))
-
-    TimeElapsed = StopTime - StartTime
-    set_PWM(PWM_FOR_TURNING)
-    EngineeredTime = compute_timer()
-    EngineeredTime *= 4
-    set_PWM(0)
-
-    print (str(TimeElapsed) + ' should be equal to ' + str(EngineeredTime))
-
-    surface_coef = TimeElapsed/EngineeredTime
-
-    print ('Surface coeficient is ' + str(surface_coef))
 
 #kind of a main function
 def main():
@@ -216,7 +179,6 @@ def main():
     if len(sys.argv) is 5:
         if sys.argv[1] == 'go':
             surface_coef = float(sys.argv[2])
-
             PWM_FOR_TURNING = int(sys.argv[3])
             PWM_FOR_STRAIGHT = int(sys.argv[4])
 
@@ -228,18 +190,14 @@ def main():
                     forward()
                     
                     #calculate distance from sign
-                    remaining_distance = distance.compute(GPIO_TRIGGER_FRONT, GPIO_ECHO_FRONT)
+                    remaining_distance = average_distance()
                     
                     #while distance is less than the desired distance, keep going
                     while remaining_distance > distance_from_sign:
-                        remaining_distance = distance.compute(GPIO_TRIGGER_FRONT, GPIO_ECHO_FRONT)
+                        remaining_distance = average_distance()
                         if remaining_distance < distance_from_sign:
                             stop()
-                            sleep(1.5)
-                            print("Dam un pic cu spatele")
-                            reverse()
-                            sleep(0.1)
-                            stop()
+                            sleep(1)
                             break
 
                     text = 'None'
@@ -248,9 +206,16 @@ def main():
                         text = traffic_recognition.findTrafficSign(camera, lower_blue, upper_blue)
                         message = '..................................'
                         if text in TRAFFIC_SIGNS:
+
+                            #Traffic sign found
                             message = 'Found sign ' + text
+
+                            #compute time to spin
                             set_PWM(PWM_FOR_TURNING)
                             timer = compute_timer()
+                            set_PWM(0)
+
+                            #choose direction to follow
                             if text == 'Turn Right':
                                 right(timer)
                                 print("Car should have turned right by now")
@@ -261,7 +226,6 @@ def main():
                                 break
                             elif text == 'Move Straight':
                                 print("Car shouldn't do anything")
-                                stop()
                                 break
                             elif text == 'Turn Back':
                                 timer *= 2.0
