@@ -241,7 +241,9 @@ def main():
                             sleep(0.1)
                             stop()
                             break
-                
+
+                    text = 'None'
+
                     while True:
                         text = traffic_recognition.findTrafficSign(camera, lower_blue, upper_blue)
                         message = '..................................'
@@ -268,6 +270,7 @@ def main():
                                 break
             
                         print(message)
+                        sleep(0.2)
 
             # Reset by pressing CTRL + C
             except KeyboardInterrupt:
