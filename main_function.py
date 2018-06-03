@@ -32,13 +32,13 @@ PWM_FOR_TURNING = 50
 PWM_FOR_STRAIGHT = 50
 
 #surface coefficient
-surface_coef = 5.0
+surface_coef = 1.0
 
 #tolerance for distance calibration
 tolerance = 1
 
 #distance from sign
-distance_from_sign = 27 #cm
+distance_from_sign = 30 #cm
 
 TRAFFIC_SIGNS = [
         'Turn Right', # turnRight
