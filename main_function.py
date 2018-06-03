@@ -286,8 +286,6 @@ def main():
             set_PWM(PWM_FOR_TURNING)
             timer = compute_timer()
             right(timer)
-            timer *= 2
-            left(timer)
             set_PWM(0)
             p1.stop()
             p2.stop()
