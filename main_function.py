@@ -262,6 +262,14 @@ def main():
                                 break
             
                     print(message)
+            # Reset by pressing CTRL + C
+            except KeyboardInterrupt:
+                set_PWM(0)
+                p1.stop()
+                p2.stop()
+                GPIO.cleanup()
+                cv2.destroyAllWindows()
+                print('Autonomus driving stopped')
 
 
     elif len(sys.argv) is 3:
@@ -282,13 +290,6 @@ def main():
             print("Test complete")
 
 
-    # Reset by pressing CTRL + C
-    except KeyboardInterrupt:
-        set_PWM(0)
-        p1.stop()
-        p2.stop()
-        GPIO.cleanup()
-        cv2.destroyAllWindows()
-        print('Autonomus driving stopped')
+    
 
 main()
