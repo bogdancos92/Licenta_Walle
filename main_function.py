@@ -231,7 +231,7 @@ def main():
                         remaining_distance = distance.compute(GPIO_TRIGGER_FRONT, GPIO_ECHO_FRONT)
                         if remaining_distance < distance_from_sign:
                             stop()
-                            sleep(0.5)
+                            sleep(1.5)
                             reverse()
                             sleep(0.1)
                             stop()
