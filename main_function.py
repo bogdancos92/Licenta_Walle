@@ -193,7 +193,7 @@ def main():
                     
                     #while distance is less than the desired distance, keep going
                     while remaining_distance > distance_from_sign:
-                        remaining_distance = average_distance()
+                        remaining_distance = distance.compute(GPIO_TRIGGER_FRONT, GPIO_ECHO_FRONT)
                         if remaining_distance < distance_from_sign:
                             stop()
                             sleep(1)
