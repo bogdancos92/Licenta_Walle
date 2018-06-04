@@ -63,11 +63,7 @@ def initial_setup():
     GPIO.setup(config.GPIO_TRIGGER_SIDE, GPIO.OUT)
     GPIO.setup(config.GPIO_ECHO_SIDE, GPIO.IN)
     
-    #frequency setup
-    motors.p1 = GPIO.PWM(config.PWM_LEFT,500)
-    motors.p2 = GPIO.PWM(config.PWM_RIGHT,500)
-    motors.p1.start(config.PWM)
-    motors.p2.start(config.PWM)
+    motors.set_frequency()
     
 #interpolation function
 def map(x, in_min, in_max, out_min, out_max):
