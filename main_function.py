@@ -75,7 +75,6 @@ def initial_setup():
     p1.start(config.PWM)
     p2.start(config.PWM)
     
-
 #interpolation function
 def map(x, in_min, in_max, out_min, out_max):
     value = 0.0
@@ -114,6 +113,7 @@ def compute_timer():
     print ('Time to spin' + str(time))
     return time
 
+#compute average distance
 def average_distance():
     average = distance.compute(config.GPIO_TRIGGER_FRONT, config.GPIO_ECHO_FRONT)
     average += distance.compute(config.GPIO_TRIGGER_FRONT, config.GPIO_ECHO_FRONT)
@@ -150,7 +150,7 @@ def main():
                         print("--------------Forward state--------------")
 
                         #Start car
-                        motors.forward(0.05)
+                        motors.forward()
                         state = 'check_distance'
                         #end of move_straight state
 
@@ -257,21 +257,23 @@ def main():
                 print('Autonomus driving stopped')
 
 
-        elif sys.argv[1] == 'testing':
-            print("Testin in 2")
-            sleep(2)            
-            surface_coef = float(sys.argv[2])
-            motors.set_PWM(PWM_FOR_TURNING)
-            timer = compute_timer()
-            motors.set_PWM(0)
-            right(timer)
-            motors.stop()
-            p1.stop()
-            p2.stop()
-            GPIO.cleanup()
-            print("Test complete")
+    elif sys.argv[1] == 'testing':
+        print("Testin in 2")
+        sleep(2)            
+        surface_coef = float(sys.argv[2])
+        motors.set_PWM(PWM_FOR_TURNING)
+        timer = compute_timer()
+        motors.set_PWM(0)
+        right(timer)
+        motors.stop()
+        p1.stop()
+        p2.stop()
+        GPIO.cleanup()
+        print("Test complete")
+        
+    else:
+        print("Fuck this program")
 
-        else:
-            print("Fuck this program")
+
 #Let the fun begin
 main()

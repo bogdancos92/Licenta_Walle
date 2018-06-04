@@ -24,11 +24,10 @@ def stop():
     set_PWM(0)
     print("Stop")
 
-def forward(timer):
+def forward():
     set_motor(1,0,0,1)
     set_PWM(config.PWM_FOR_STRAIGHT)
     print("Straight")
-    sleep(timer)
 
 def reverse():
     set_motor(0,1,1,0)
