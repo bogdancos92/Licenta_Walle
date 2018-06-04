@@ -118,14 +118,17 @@ def average_distance():
 #kind of a main function
 def main():
     global surface_coef
+    global distance_from_sign
+    
     print('In main function')
     
-    if len(sys.argv) is 5:
+    if len(sys.argv) is 6:
 
         #initialize configurable data
         surface_coef = float(sys.argv[2])
         config.PWM_FOR_TURNING = int(sys.argv[3])
         config.PWM_FOR_STRAIGHT = int(sys.argv[4])
+        distance_from_sign = int(sys.argv[5])
 
         if sys.argv[1] == 'start':
 
