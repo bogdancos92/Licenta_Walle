@@ -154,7 +154,7 @@ def main():
                                 print("Car is stopped and motors are set to on")
                                 motors.forward()
                                 print("Car is moving")
-                                remaining_distance = average_distance()                        
+                                sleep(0.2)                      
                                 #while distance is less than the desired distance, keep going
                                 while remaining_distance > distance_from_sign:
 
