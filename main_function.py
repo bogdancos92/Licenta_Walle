@@ -119,7 +119,7 @@ def average_distance():
 def main():
     global surface_coef
     global distance_from_sign
-    
+
     print('In main function')
     
     if len(sys.argv) is 6:
@@ -158,7 +158,6 @@ def main():
                                 motors.forward()
                                 print("Car is moving")
                                 sleep(0.2)
-                                distance.compute(config.GPIO_TRIGGER_FRONT, config.GPIO_ECHO_FRONT)                      
                                 #while distance is less than the desired distance, keep going
                                 while remaining_distance > distance_from_sign:
 
