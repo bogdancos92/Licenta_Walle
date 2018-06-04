@@ -1,26 +1,6 @@
 #Libraries
 import RPi.GPIO as GPIO
 import time
-
-# #GPIO Mode (BOARD / BCM)
-# GPIO.setmode(GPIO.BCM)
- 
-# #set GPIO Pins for front ultrasonic sensor
-# GPIO_TRIGGER_FRONT  = 17
-# GPIO_ECHO_FRONT     = 18
-
-# #set GPIO Pins for side ultrasonic sensor
-# GPIO_TRIGGER_SIDE   = 22
-# GPIO_ECHO_SIDE      = 23
- 
-# #set GPIO direction (IN / OUT)
-# GPIO.setup(GPIO_TRIGGER_FRONT, GPIO.OUT)
-# GPIO.setup(GPIO_ECHO_FRONT, GPIO.IN)
-# GPIO.setup(GPIO_TRIGGER_SIDE, GPIO.OUT)
-# GPIO.setup(GPIO_ECHO_SIDE, GPIO.IN)
-
-#let sensors settle
-# time.sleep(0.5)
  
 def compute(Trigger, Echo):
     #print ("Entering function with pin %d and pin %d", Trigger, Echo)

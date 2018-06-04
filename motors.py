@@ -1,3 +1,4 @@
+#Libraries
 import RPi.GPIO as GPIO
 from time import sleep
 from main_function import p1, p2

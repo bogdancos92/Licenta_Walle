@@ -1,3 +1,4 @@
+#Libraries
 import os
 import RPi.GPIO as GPIO
 from time import sleep
@@ -7,10 +8,10 @@ import cv2
 import sys
 
 #import other files
-from motors import *
 import distance
 import traffic_recognition
 import config
+import motors
 
 #surface coefficient
 surface_coef = 1.0
