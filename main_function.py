@@ -157,21 +157,26 @@ def main():
 
                         #calculate distance from sign
                         remaining_distance = average_distance()
-                        
-                        #while distance is less than the desired distance, keep going
-                        while remaining_distance > distance_from_sign and config.PWM > 0:
-
-                            remaining_distance = distance.compute(config.GPIO_TRIGGER_FRONT, config.GPIO_ECHO_FRONT)
-
-                            if remaining_distance < distance_from_sign:
-                                motors.stop()
-                                sleep(1)
-                                break
 
                         if config.PWM == 0:
-                            state = 'move_straight'
-                        else:
-                            state = 'check_for_sign'                        
+                            if remaining_distance > (0.8 * distance_from_sign):
+                                state = 'move_straight'
+                            else:
+                                state = 'check_for_sign'
+
+                        else:                        
+                            #while distance is less than the desired distance, keep going
+                            while remaining_distance > distance_from_sign:
+    
+                                remaining_distance = distance.compute(config.GPIO_TRIGGER_FRONT, config.GPIO_ECHO_FRONT)
+    
+                                if remaining_distance < distance_from_sign:
+                                    motors.stop()
+                                    sleep(1)
+                                    state = 'check_for_sign'
+                                    break
+
+                                                
                         #end of check_distance state
 
                     elif state == 'check_for_sign' :
