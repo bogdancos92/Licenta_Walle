@@ -1,7 +1,8 @@
 #Libraries
 import RPi.GPIO as GPIO
 from time import sleep
-from main_function import p1, p2
+from main_function import p1
+from main_function import p2
 import config
 
 #set global pwm and pwm for motors
