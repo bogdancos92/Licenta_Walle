@@ -121,12 +121,13 @@ def main():
     print('In main function')
     
     if len(sys.argv) is 5:
-        if sys.argv[1] == 'start':
 
-            #initialize configurable data
-            surface_coef = float(sys.argv[2])
-            config.PWM_FOR_TURNING = int(sys.argv[3])
-            config.PWM_FOR_STRAIGHT = int(sys.argv[4])
+        #initialize configurable data
+        surface_coef = float(sys.argv[2])
+        config.PWM_FOR_TURNING = int(sys.argv[3])
+        config.PWM_FOR_STRAIGHT = int(sys.argv[4])
+
+        if sys.argv[1] == 'start':
 
             try:
                 state = 'initial'
