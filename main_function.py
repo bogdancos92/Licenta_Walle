@@ -257,22 +257,22 @@ def main():
                 print('Autonomus driving stopped')
 
 
-    elif sys.argv[1] == 'testing':
-        print("Testin in 2")
-        sleep(2)            
-        surface_coef = float(sys.argv[2])
-        motors.set_PWM(PWM_FOR_TURNING)
-        timer = compute_timer()
-        motors.set_PWM(0)
-        right(timer)
-        motors.stop()
-        p1.stop()
-        p2.stop()
-        GPIO.cleanup()
-        print("Test complete")
-        
-    else:
-        print("Fuck this program")
+        elif sys.argv[1] == 'testing':
+            print("Testin in 2")
+            sleep(2)            
+            surface_coef = float(sys.argv[2])
+            motors.set_PWM(PWM_FOR_TURNING)
+            timer = compute_timer()
+            motors.set_PWM(0)
+            right(timer)
+            motors.stop()
+            p1.stop()
+            p2.stop()
+            GPIO.cleanup()
+            print("Test complete")
+            
+        else:
+            print("Fuck this program")
 
 
 #Let the fun begin
