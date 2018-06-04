@@ -154,7 +154,8 @@ def main():
                                 print("Car is stopped and motors are set to on")
                                 motors.forward()
                                 print("Car is moving")
-                                sleep(0.2)                      
+                                sleep(0.2)
+                                distance.compute(config.GPIO_TRIGGER_FRONT, config.GPIO_ECHO_FRONT)                      
                                 #while distance is less than the desired distance, keep going
                                 while remaining_distance > distance_from_sign:
 
