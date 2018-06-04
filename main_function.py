@@ -85,7 +85,7 @@ def compute_RPM():
     #3V...125RPM
     #5V...200RPM
     #6V...230RPM
-    voltage = map(config..PWM_FOR_TURNING, 0, 100, 0.0, 6.0)
+    voltage = map(config.PWM_FOR_TURNING, 0, 100, 0.0, 6.0)
     RPM = 0
     if voltage < 3.0:
         voltage = 3.0
@@ -97,7 +97,7 @@ def compute_RPM():
     elif voltage >= 6.0:
         voltage = 6.0
         RPM = 230
-    print('RPM = ' + str(RPM) + ' for PWM_FOR_TURNING = ' + str(config..PWM_FOR_TURNING) + ' and voltage = ' + str(voltage))
+    print('RPM = ' + str(RPM) + ' for PWM_FOR_TURNING = ' + str(config.PWM_FOR_TURNING) + ' and voltage = ' + str(voltage))
     return RPM
 
 #compute time needed to spin 90 degrees
