@@ -45,7 +45,6 @@ camera = cv2.VideoCapture(0)
 def initial_setup():
 
     #setup
-    GPIO.cleanup()
     GPIO.setmode(GPIO.BCM)
     GPIO.setwarnings(False)
     
