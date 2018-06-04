@@ -6,6 +6,8 @@ import config
 global p1
 global p2
 
+GPIO.setmode(GPIO.BCM)
+
 #set global pwm and pwm for motors
 def set_PWM(value):
     config.PWM = value
