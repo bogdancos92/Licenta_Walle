@@ -254,6 +254,7 @@ def main():
 
 
         elif sys.argv[1] == 'testing':
+            initial_setup()
             print("Testin in 2")
             sleep(2)            
             surface_coef = float(sys.argv[2])
