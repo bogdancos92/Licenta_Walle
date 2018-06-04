@@ -148,7 +148,7 @@ def main():
                         print("--------------Forward state--------------")
 
                         #Start car
-                        motors.forward()
+                        
                         state = 'check_distance'
                         #end of move_straight state
 
@@ -160,24 +160,25 @@ def main():
 
                         if config.PWM == 0:
                             if remaining_distance > (0.8 * distance_from_sign):
-                                print("Car is stopped and state changed to forward")
+                                print("Car is stopped and motors are set to on")
+                                motors.forward()
                                 state = 'move_straight'
                             else:
                                 print("Car is stopped and sign shoud be in front")
                                 state = 'check_for_sign'
 
-                        else:
-                            print("Car is moving")                        
-                            #while distance is less than the desired distance, keep going
-                            while remaining_distance > distance_from_sign:
-    
-                                remaining_distance = distance.compute(config.GPIO_TRIGGER_FRONT, config.GPIO_ECHO_FRONT)
-    
-                                if remaining_distance < distance_from_sign:
-                                    motors.stop()
-                                    sleep(1)
-                                    state = 'check_for_sign'
-                                    break
+
+                        print("Car is moving")                        
+                        #while distance is less than the desired distance, keep going
+                        while remaining_distance > distance_from_sign:
+
+                            remaining_distance = distance.compute(config.GPIO_TRIGGER_FRONT, config.GPIO_ECHO_FRONT)
+
+                            if remaining_distance < distance_from_sign:
+                                motors.stop()
+                                sleep(1)
+                                state = 'check_for_sign'
+                                break
 
                                                 
                         #end of check_distance state
