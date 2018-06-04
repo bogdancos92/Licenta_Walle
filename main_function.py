@@ -58,7 +58,7 @@ camera = cv2.VideoCapture(0)
 
 
 #set all pins and initialize pwms
-def initial_setup()
+def initial_setup():
     global p1
     global p2
 
