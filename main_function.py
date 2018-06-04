@@ -176,6 +176,8 @@ def main():
                         StartTime = time.time()
                         StopTime = time.time()
 
+                        text = 'None'
+
                         while True:
                             StopTime = time.time()
                             ElapsedTime = StopTime - StartTime
