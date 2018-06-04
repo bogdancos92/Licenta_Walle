@@ -29,7 +29,6 @@ TRAFFIC_SIGNS = [
 #state machine states
 STATES = [
         'initial',
-        'move_straight',
         'check_distance',
         'check_for_sign',
         'end'
@@ -144,14 +143,6 @@ def main():
                         state = 'check_distance'
                         #end of initial state
 
-                    elif state == 'move_straight' :
-                        print("--------------Forward state--------------")
-
-                        #Start car
-                        
-                        state = 'check_distance'
-                        #end of move_straight state
-
                     elif state == 'check_distance' :
                         print("---------Checking distance state---------")
 
@@ -162,25 +153,20 @@ def main():
                             if remaining_distance > (0.8 * distance_from_sign):
                                 print("Car is stopped and motors are set to on")
                                 motors.forward()
-                                state = 'move_straight'
+                                print("Car is moving")                        
+                                #while distance is less than the desired distance, keep going
+                                while remaining_distance > distance_from_sign:
+
+                                    remaining_distance = distance.compute(config.GPIO_TRIGGER_FRONT, config.GPIO_ECHO_FRONT)
+
+                                    if remaining_distance < distance_from_sign:
+                                        motors.stop()
+                                        sleep(1)
+                                        break
                             else:
                                 print("Car is stopped and sign shoud be in front")
-                                state = 'check_for_sign'
-
-
-                        print("Car is moving")                        
-                        #while distance is less than the desired distance, keep going
-                        while remaining_distance > distance_from_sign:
-
-                            remaining_distance = distance.compute(config.GPIO_TRIGGER_FRONT, config.GPIO_ECHO_FRONT)
-
-                            if remaining_distance < distance_from_sign:
-                                motors.stop()
-                                sleep(1)
-                                state = 'check_for_sign'
-                                break
-
-                                                
+                        
+                        state = 'check_for_sign'   
                         #end of check_distance state
 
                     elif state == 'check_for_sign' :
@@ -211,24 +197,24 @@ def main():
                                     if text == 'Turn Right':
                                         motors.right(timer)
                                         print("Car should have turned right by now")
-                                        state = 'move_straight'
+                                        state = 'check_distance'
                                         break
 
                                     elif text == 'Turn Left':
                                         motors.left(timer)
                                         print("Car should have turned left by now")
-                                        state = 'move_straight'
+                                        state = 'check_distance'
                                         break
 
                                     elif text == 'Move Straight':
                                         print("Car shouldn't do anything")
-                                        state = 'move_straight'
+                                        state = 'check_distance'
                                         break
 
                                     elif text == 'Turn Back':
                                         motors.reverse(timer)
                                         print("Car should have turned back by now")
-                                        state = 'move_straight'
+                                        state = 'check_distance'
                                         break
                                 else:
                                     print(message)
