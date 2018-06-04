@@ -201,7 +201,8 @@ def main():
 
                                 if text in TRAFFIC_SIGNS:        
                                     #Traffic sign found
-                                    message = 'Found sign --------- ' + text        
+                                    message = 'Found sign --------- ' + text
+                                    print(message)        
                                     #compute time to spin
                                     timer = compute_timer()        
                                     #choose direction to follow
@@ -228,8 +229,9 @@ def main():
                                         print("Car should have turned back by now")
                                         state = 'move_straight'
                                         break
-
-                        print(message)
+                                else:
+                                    print(message)
+                        
                         sleep(1)
                         #end of check_for_sign state
 
