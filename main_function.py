@@ -105,6 +105,7 @@ def compute_timer():
     # 0.637 rotations   ... x sec
     # RPM rotations     ... 60 sec
     # x = 0.637 * 60 sec / RPM
+    print('RPM = ' + str(RPM) + str(surface_coef))
     time = ((0.637 * 60.0)/RPM) * surface_coef
     print ('Time to spin' + str(time))
     return time
