@@ -35,7 +35,7 @@ def reverse(timer):
     set_motor(1,0,1,0)
     set_PWM(config.PWM_FOR_TURNING)
     print("Turning around")
-    timer *= 3.0
+    timer *= 2.0
     sleep(timer)
     stop()
 
