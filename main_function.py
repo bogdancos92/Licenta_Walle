@@ -11,14 +11,6 @@ import motors
 import distance
 import traffic_recognition
 
-#set GPIO Pins for front ultrasonic sensor
-GPIO_TRIGGER_FRONT  = 17
-GPIO_ECHO_FRONT     = 18
-
-#set GPIO Pins for side ultrasonic sensor
-GPIO_TRIGGER_SIDE   = 22
-GPIO_ECHO_SIDE      = 23
-
 #surface coefficient
 surface_coef = 1.0
 
@@ -47,8 +39,8 @@ upper_blue = np.array([115,255,255])
 
 camera = cv2.VideoCapture(0)
 
-p1 = 0
-p2 = 0
+global p1
+global p2
 
 #set all pins and initialize pwms
 def initial_setup():
@@ -60,14 +52,14 @@ def initial_setup():
     GPIO.setwarnings(False)
     
     #left motor setup
-    GPIO.setup(motors.LEFT_POZ,GPIO.OUT)
-    GPIO.setup(motors.LEFT_NEG,GPIO.OUT)
-    GPIO.setup(motors.PWM_LEFT,GPIO.OUT)
+    GPIO.setup(config.LEFT_POZ,GPIO.OUT)
+    GPIO.setup(config.LEFT_NEG,GPIO.OUT)
+    GPIO.setup(config.PWM_LEFT,GPIO.OUT)
     
     #right motor setup
-    GPIO.setup(motors.RIGHT_POZ,GPIO.OUT)
-    GPIO.setup(motors.RIGHT_NEG,GPIO.OUT)
-    GPIO.setup(motors.PWM_RIGHT,GPIO.OUT)
+    GPIO.setup(config.RIGHT_POZ,GPIO.OUT)
+    GPIO.setup(config.RIGHT_NEG,GPIO.OUT)
+    GPIO.setup(config.PWM_RIGHT,GPIO.OUT)
     
     #ultrasonic setup
     GPIO.setup(GPIO_TRIGGER_FRONT, GPIO.OUT)
@@ -76,10 +68,10 @@ def initial_setup():
     GPIO.setup(GPIO_ECHO_SIDE, GPIO.IN)
     
     #frequency setup
-    p1 = GPIO.PWM(motors.PWM_LEFT,500)
-    p2 = GPIO.PWM(motors.PWM_RIGHT,500)
-    p1.start(motors.PWM)
-    p2.start(motors.PWM)
+    p1 = GPIO.PWM(config.PWM_LEFT,500)
+    p2 = GPIO.PWM(config.PWM_RIGHT,500)
+    p1.start(config.PWM)
+    p2.start(config.PWM)
     
 
 #interpolation function
@@ -93,7 +85,7 @@ def compute_RPM():
     #3V...125RPM
     #5V...200RPM
     #6V...230RPM
-    voltage = map(motors.PWM_FOR_TURNING, 0, 100, 0.0, 6.0)
+    voltage = map(config..PWM_FOR_TURNING, 0, 100, 0.0, 6.0)
     RPM = 0
     if voltage < 3.0:
         voltage = 3.0
@@ -105,7 +97,7 @@ def compute_RPM():
     elif voltage >= 6.0:
         voltage = 6.0
         RPM = 230
-    print('RPM = ' + str(RPM) + ' for PWM_FOR_TURNING = ' + str(motors.PWM_FOR_TURNING) + ' and voltage = ' + str(voltage))
+    print('RPM = ' + str(RPM) + ' for PWM_FOR_TURNING = ' + str(config..PWM_FOR_TURNING) + ' and voltage = ' + str(voltage))
     return RPM
 
 #compute time needed to spin 90 degrees
@@ -121,8 +113,8 @@ def compute_timer():
     return time
 
 def average_distance():
-    average = distance.compute(GPIO_TRIGGER_FRONT, GPIO_ECHO_FRONT)
-    average += distance.compute(GPIO_TRIGGER_FRONT, GPIO_ECHO_FRONT)
+    average = distance.compute(config.GPIO_TRIGGER_FRONT, config.GPIO_ECHO_FRONT)
+    average += distance.compute(config.GPIO_TRIGGER_FRONT, config.GPIO_ECHO_FRONT)
     average /= 2
     return average
 
@@ -135,8 +127,8 @@ def main():
 
             #initialize configurable data
             surface_coef = float(sys.argv[2])
-            motors.PWM_FOR_TURNING = int(sys.argv[3])
-            motors.PWM_FOR_STRAIGHT = int(sys.argv[4])
+            config.PWM_FOR_TURNING = int(sys.argv[3])
+            config.PWM_FOR_STRAIGHT = int(sys.argv[4])
 
             try:
                 state = 'initial'
@@ -169,7 +161,7 @@ def main():
                         #while distance is less than the desired distance, keep going
                         while remaining_distance > distance_from_sign:
 
-                            remaining_distance = distance.compute(GPIO_TRIGGER_FRONT, GPIO_ECHO_FRONT)
+                            remaining_distance = distance.compute(config.GPIO_TRIGGER_FRONT, config.GPIO_ECHO_FRONT)
 
                             if remaining_distance < distance_from_sign:
                                 motors.stop()
