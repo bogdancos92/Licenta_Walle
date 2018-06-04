@@ -255,7 +255,7 @@ def main():
             print("Testin in 2")
             sleep(2)            
             surface_coef = float(sys.argv[2])
-            motors.set_PWM(PWM_FOR_TURNING)
+            motors.set_PWM(config.PWM_FOR_TURNING)
             timer = compute_timer()
             motors.set_PWM(0)
             right(timer)
