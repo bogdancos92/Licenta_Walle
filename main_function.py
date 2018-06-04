@@ -221,8 +221,7 @@ def main():
                                         break
 
                                     elif text == 'Turn Back':
-                                        timer *= 2.0
-                                        motors.right(timer)
+                                        motors.reverse(timer)
                                         print("Car should have turned back by now")
                                         state = 'move_straight'
                                         break

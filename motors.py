@@ -31,9 +31,13 @@ def forward():
     set_PWM(config.PWM_FOR_STRAIGHT)
     print("Straight")
 
-def reverse():
-    set_motor(0,1,1,0)
-    set_PWM(config.PWM_FOR_STRAIGHT)
+def reverse(timer):
+    set_motor(1,0,1,0)
+    set_PWM(config.PWM_FOR_TURNING)
+    print("Turning around")
+    timer *= 3.0
+    sleep(timer)
+    stop()
 
 def right(timer):
     set_motor(1,0,1,0)
