@@ -159,7 +159,7 @@ def main():
                         remaining_distance = average_distance()
                         
                         #while distance is less than the desired distance, keep going
-                        while remaining_distance > distance_from_sign:
+                        while remaining_distance > distance_from_sign and motors.PWM > 0:
 
                             remaining_distance = distance.compute(config.GPIO_TRIGGER_FRONT, config.GPIO_ECHO_FRONT)
 
