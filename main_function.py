@@ -217,7 +217,7 @@ def main():
                     elif state == 'end' :
                         print("-----------------The End-----------------")
                         print("No image found")
-                        motors.set_PWM(0)
+                        motors.stop()
                         motors.p1.stop()
                         motors.p2.stop()
                         GPIO.cleanup()
@@ -229,7 +229,7 @@ def main():
                     else:
                         #well this is not supposed to ever come up
                         print("State not implemented")
-                        motors.set_PWM(0)
+                        motors.stop()
                         motors.p1.stop()
                         motors.p2.stop()
                         GPIO.cleanup()
@@ -239,7 +239,7 @@ def main():
 
             # Reset by pressing CTRL + C
             except KeyboardInterrupt:
-                motors.set_PWM(0)
+                motors.stop()
                 motors.p1.stop()
                 motors.p2.stop()
                 GPIO.cleanup()
@@ -251,9 +251,7 @@ def main():
             print("Testin in 2")
             sleep(2)            
             surface_coef = float(sys.argv[2])
-            motors.set_PWM(config.PWM_FOR_TURNING)
             timer = compute_timer()
-            motors.set_PWM(0)
             right(timer)
             motors.stop()
             motors.p1.stop()
