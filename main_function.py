@@ -260,7 +260,6 @@ def main():
             surface_coef = float(sys.argv[2])
             timer = compute_timer()
             motors.right(timer)
-            motors.stop()
             motors.p1.stop()
             motors.p2.stop()
             GPIO.cleanup()
