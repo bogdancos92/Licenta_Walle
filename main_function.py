@@ -7,7 +7,7 @@ import cv2
 import sys
 
 #import other files
-import motors
+from motors import *
 import distance
 import traffic_recognition
 import config
