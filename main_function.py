@@ -17,7 +17,7 @@ import motors
 surface_coef = 1.0
 
 #distance from sign
-distance_from_sign = 30 #cm
+distance_from_sign = 25 #cm
 
 TRAFFIC_SIGNS = [
         'Turn Right', # turnRight
