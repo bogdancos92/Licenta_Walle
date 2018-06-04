@@ -150,7 +150,7 @@ def identifyTrafficSign(image):
     if segments in SIGNS_LOOKUP:
         return SIGNS_LOOKUP[segments]
     else:
-        return "None"
+        return '..................................'
 
 
 # def main():
