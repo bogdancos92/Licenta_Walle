@@ -10,6 +10,7 @@ import sys
 import motors
 import distance
 import traffic_recognition
+import config
 
 #surface coefficient
 surface_coef = 1.0
