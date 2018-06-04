@@ -112,7 +112,8 @@ def compute_timer():
 def average_distance():
     average = distance.compute(config.GPIO_TRIGGER_FRONT, config.GPIO_ECHO_FRONT)
     average += distance.compute(config.GPIO_TRIGGER_FRONT, config.GPIO_ECHO_FRONT)
-    average /= 2
+    average += distance.compute(config.GPIO_TRIGGER_FRONT, config.GPIO_ECHO_FRONT)
+    average /= 3
     return average
 
 #kind of a main function
