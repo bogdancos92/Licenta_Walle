@@ -63,10 +63,10 @@ def initial_setup():
     GPIO.setup(config.PWM_RIGHT,GPIO.OUT)
     
     #ultrasonic setup
-    GPIO.setup(GPIO_TRIGGER_FRONT, GPIO.OUT)
-    GPIO.setup(GPIO_ECHO_FRONT, GPIO.IN)
-    GPIO.setup(GPIO_TRIGGER_SIDE, GPIO.OUT)
-    GPIO.setup(GPIO_ECHO_SIDE, GPIO.IN)
+    GPIO.setup(config.GPIO_TRIGGER_FRONT, GPIO.OUT)
+    GPIO.setup(config.GPIO_ECHO_FRONT, GPIO.IN)
+    GPIO.setup(config.GPIO_TRIGGER_SIDE, GPIO.OUT)
+    GPIO.setup(config.GPIO_ECHO_SIDE, GPIO.IN)
     
     #frequency setup
     p1 = GPIO.PWM(config.PWM_LEFT,500)
