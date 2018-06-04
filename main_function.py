@@ -256,8 +256,8 @@ def main():
         elif sys.argv[1] == 'testing':
             initial_setup()
             print("Testin in 2")
-            sleep(2)            
-            surface_coef = float(sys.argv[2])
+            sleep(2)
+            print("surface_coef is "  + surface_coef)
             timer = compute_timer()
             motors.right(timer)
             motors.p1.stop()
