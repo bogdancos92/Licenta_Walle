@@ -1,5 +1,6 @@
 import RPi.GPIO as GPIO
 from time import sleep
+from main_function import p1, p2
 
 #setting left engine pins
 LEFT_POZ    = 6
