@@ -93,7 +93,7 @@ def compute_RPM():
     elif voltage >= 6.0:
         voltage = 6.0
         RPM = 230
-    print('RPM = ' + str(RPM) + ' for PWM_FOR_TURNING = ' + str(config.PWM_FOR_TURNING) + ' and voltage = ' + str(voltage))
+    #print('RPM = ' + str(RPM) + ' for PWM_FOR_TURNING = ' + str(config.PWM_FOR_TURNING) + ' and voltage = ' + str(voltage))
     return RPM
 
 #compute time needed to spin 90 degrees
@@ -105,9 +105,8 @@ def compute_timer():
     # 0.637 rotations   ... x sec
     # RPM rotations     ... 60 sec
     # x = 0.637 * 60 sec / RPM
-    print('RPM = ' + str(RPM) + str(surface_coef))
     time = ((0.637 * 60.0)/RPM) * surface_coef
-    print ('Time to spin' + str(time))
+    print ('Time to spin ... ' + str(time))
     return time
 
 #compute average distance
@@ -119,6 +118,7 @@ def average_distance():
 
 #kind of a main function
 def main():
+    global surface_coef
     print('In main function')
     
     if len(sys.argv) is 5:
