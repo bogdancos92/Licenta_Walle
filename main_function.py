@@ -106,7 +106,7 @@ def compute_timer():
     # RPM rotations     ... 60 sec
     # x = 0.637 * 60 sec / RPM
     time = ((0.637 * 60.0)/RPM) * surface_coef
-    print ('Time to spin ... ' + str(time))
+    # print ('Time to spin ... ' + str(time))
     return time
 
 #compute average distance
@@ -141,7 +141,7 @@ def main():
                         initial_setup()
                         print("Setup done")
                         sleep(2)
-                        state = 'move_straight'
+                        state = 'check_distance'
                         #end of initial state
 
                     elif state == 'move_straight' :
@@ -167,6 +167,7 @@ def main():
                                 motors.stop()
                                 sleep(1)
                                 break
+
                         state = 'check_for_sign'
                         #end of check_distance state
 
