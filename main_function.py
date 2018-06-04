@@ -41,15 +41,6 @@ STATES = [
         'end'
     ]
 
-#frequency setup
-p1 = GPIO.PWM(motors.PWM_LEFT,500)
-p2 = GPIO.PWM(motors.PWM_RIGHT,500)
-p1.start(motors.PWM)
-p2.start(motors.PWM)
-
-#let the setup settle
-sleep(2)
-
 # define range HSV for blue color of the traffic sign
 lower_blue = np.array([85,100,70])
 upper_blue = np.array([115,255,255])
