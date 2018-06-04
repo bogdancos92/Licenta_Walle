@@ -47,6 +47,8 @@ upper_blue = np.array([115,255,255])
 
 camera = cv2.VideoCapture(0)
 
+p1 = 0
+p2 = 0
 
 #set all pins and initialize pwms
 def initial_setup():
