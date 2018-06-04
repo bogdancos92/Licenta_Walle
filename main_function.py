@@ -41,14 +41,8 @@ upper_blue = np.array([115,255,255])
 
 camera = cv2.VideoCapture(0)
 
-global p1
-global p2
-
 #set all pins and initialize pwms
 def initial_setup():
-    global p1
-    global p2
-
     #setup
     GPIO.setmode(GPIO.BCM)
     GPIO.setwarnings(False)
@@ -70,10 +64,10 @@ def initial_setup():
     GPIO.setup(config.GPIO_ECHO_SIDE, GPIO.IN)
     
     #frequency setup
-    p1 = GPIO.PWM(config.PWM_LEFT,500)
-    p2 = GPIO.PWM(config.PWM_RIGHT,500)
-    p1.start(config.PWM)
-    p2.start(config.PWM)
+    motors.p1 = GPIO.PWM(config.PWM_LEFT,500)
+    motors.p2 = GPIO.PWM(config.PWM_RIGHT,500)
+    motors.p1.start(config.PWM)
+    motors.p2.start(config.PWM)
     
 #interpolation function
 def map(x, in_min, in_max, out_min, out_max):
@@ -228,8 +222,8 @@ def main():
                         print("-----------------The End-----------------")
                         print("No image found")
                         motors.set_PWM(0)
-                        p1.stop()
-                        p2.stop()
+                        motors.p1.stop()
+                        motors.p2.stop()
                         GPIO.cleanup()
                         cv2.destroyAllWindows()
                         print("End of program")
@@ -240,8 +234,8 @@ def main():
                         #well this is not supposed to ever come up
                         print("State not implemented")
                         motors.set_PWM(0)
-                        p1.stop()
-                        p2.stop()
+                        motors.p1.stop()
+                        motors.p2.stop()
                         GPIO.cleanup()
                         cv2.destroyAllWindows()
                         print("End of program")
@@ -250,8 +244,8 @@ def main():
             # Reset by pressing CTRL + C
             except KeyboardInterrupt:
                 motors.set_PWM(0)
-                p1.stop()
-                p2.stop()
+                motors.p1.stop()
+                motors.p2.stop()
                 GPIO.cleanup()
                 cv2.destroyAllWindows()
                 print('Autonomus driving stopped')
@@ -266,11 +260,11 @@ def main():
             motors.set_PWM(0)
             right(timer)
             motors.stop()
-            p1.stop()
-            p2.stop()
+            motors.p1.stop()
+            motors.p2.stop()
             GPIO.cleanup()
             print("Test complete")
-            
+
         else:
             print("Fuck this program")
 
