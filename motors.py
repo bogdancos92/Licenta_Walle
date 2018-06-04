@@ -3,8 +3,8 @@ import RPi.GPIO as GPIO
 from time import sleep
 import config
 
-from main_function import p1
-from main_function import p2
+global p1
+global p2
 
 #set global pwm and pwm for motors
 def set_PWM(value):

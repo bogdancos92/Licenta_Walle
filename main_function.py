@@ -41,9 +41,6 @@ upper_blue = np.array([115,255,255])
 
 camera = cv2.VideoCapture(0)
 
-global p1
-global p2
-
 #set all pins and initialize pwms
 def initial_setup():
 
@@ -68,10 +65,10 @@ def initial_setup():
     GPIO.setup(config.GPIO_ECHO_SIDE, GPIO.IN)
     
     #frequency setup
-    p1 = GPIO.PWM(config.PWM_LEFT,500)
-    p2 = GPIO.PWM(config.PWM_RIGHT,500)
-    p1.start(config.PWM)
-    p2.start(config.PWM)
+    motors.p1 = GPIO.PWM(config.PWM_LEFT,500)
+    motors.p2 = GPIO.PWM(config.PWM_RIGHT,500)
+    motors.p1.start(config.PWM)
+    motors.p2.start(config.PWM)
     
 #interpolation function
 def map(x, in_min, in_max, out_min, out_max):
