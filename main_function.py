@@ -98,6 +98,7 @@ def compute_RPM():
 
 #compute time needed to spin 90 degrees
 def compute_timer():
+    global surface_coef
     RPM = compute_RPM()
     # distance to move 130mm
     # one rotation = pi * 65mm = 204
