@@ -150,13 +150,15 @@ def main():
                         print("--------------Forward state--------------")
 
                         #Start car
-                        motors.forward()
+                        forward()
                         state = 'check_distance'
                         #end of move_straight state
 
                     elif state == 'check_distance' :
                         print("---------Checking distance state---------")
 
+                        stop()
+                        motors.stop()
                         #calculate distance from sign
                         remaining_distance = average_distance()
                         
