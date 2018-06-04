@@ -6,13 +6,6 @@ import config
 global p1
 global p2
 
-def set_frequency():
-    #frequency setup
-    p1 = GPIO.PWM(config.PWM_LEFT,500)
-    p2 = GPIO.PWM(config.PWM_RIGHT,500)
-    p1.start(config.PWM)
-    p2.start(config.PWM)
-
 #set global pwm and pwm for motors
 def set_PWM(value):
     config.PWM = value
