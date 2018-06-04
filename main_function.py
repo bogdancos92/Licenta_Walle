@@ -168,7 +168,10 @@ def main():
                                 sleep(1)
                                 break
 
-                        state = 'check_for_sign'
+                        if config.PWM == 0:
+                            state = 'move_straight'
+                        else:
+                            state = 'check_for_sign'                        
                         #end of check_distance state
 
                     elif state == 'check_for_sign' :
