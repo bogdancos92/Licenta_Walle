@@ -345,7 +345,7 @@ def main():
                                 print(message)
 
                     
-                    sleep(1)
+                    sleep(4)
                     #end of check_for_sign state
                 elif state == 'end' :
                     print("-----------------The End-----------------")
