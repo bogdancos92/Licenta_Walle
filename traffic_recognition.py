@@ -116,7 +116,7 @@ def identifyTrafficSign(image):
         (1, 0, 1, 1): 'Turn Back', # turnBack
     }
 
-    THRESHOLD = 175
+    THRESHOLD = 200
 
     image = cv2.bitwise_not(image)
     # (roiH, roiW) = roi.shape
