@@ -338,7 +338,8 @@ def main():
                             if text in TRAFFIC_SIGNS:
                                 #Traffic sign found
                                 message = 'Found sign --------- ' + text
-                                print(message)        
+                                print(message)
+                                break   
                             else:
                                 print(message)
                     
