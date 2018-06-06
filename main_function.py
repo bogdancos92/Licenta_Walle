@@ -274,7 +274,98 @@ def main():
             print("Test complete")
 
         else:
-            print("Something went way to wrong")
+            print("Unknown argument")
+
+    elif sys.argv[1] == 'camera':
+
+        try:
+            state = 'initial'
+
+            while state in STATES:
+
+                if state == 'initial' :
+                    print("--------------Initial state--------------")
+                    initial_setup()
+                    print("Setup done")
+                    sleep(2)
+                    state = 'check_distance'
+                    #end of initial state
+
+                elif state == 'check_distance' :
+                    print("---------Checking distance state---------")
+                    #calculate distance from sign
+                    remaining_distance = average_distance()
+
+                    if config.PWM == 0:
+                        if remaining_distance > (0.8 * distance_from_sign):
+                            print("Car is stopped and motors are set to on")
+                            print("Car is moving")
+                            sleep(0.2)
+                            #while distance is less than the desired distance, keep going
+                            while remaining_distance > distance_from_sign:
+                                remaining_distance = distance.compute(config.GPIO_TRIGGER_FRONT, config.GPIO_ECHO_FRONT)
+                                if remaining_distance < distance_from_sign:
+                                    sleep(1)
+                                    break
+                        else:
+                            print("Car is stopped and sign shoud be in front")
+                    
+                    state = 'check_for_sign'   
+                    #end of check_distance state
+
+                elif state == 'check_for_sign' :
+                    print("--------Checking for a sign state--------")
+
+                    StartTime = time.time()
+                    StopTime = time.time()
+
+                    text = 'None'
+
+                    while True:
+                        
+                        StopTime = time.time()
+                        ElapsedTime = StopTime - StartTime
+
+                        if ElapsedTime > 5 :
+                            print("No image found")
+                            state = 'end'
+                            break
+
+                        else :
+                            text = str(traffic_recognition.findTrafficSign(camera, lower_blue, upper_blue))
+                            message = text
+
+                            if text in TRAFFIC_SIGNS:
+                                #Traffic sign found
+                                message = 'Found sign --------- ' + text
+                                print(message)        
+                            else:
+                                print(message)
+                    
+                    sleep(1)
+                    #end of check_for_sign state
+                elif state == 'end' :
+                    print("-----------------The End-----------------")
+                    GPIO.cleanup()
+                    cv2.destroyAllWindows()
+                    print("End of program")
+                    sys.exit(0)
+                    #end of end state
+                else:
+                    #well this is not supposed to ever come up
+                    print("State not implemented")
+                    GPIO.cleanup()
+                    cv2.destroyAllWindows()
+                    print("End of program")
+                    sys.exit(0)
+        # Reset by pressing CTRL + C
+        except KeyboardInterrupt:
+            GPIO.cleanup()
+            cv2.destroyAllWindows()
+            print('Autonomus driving stopped')
+
+    else:
+        print("Something went way to wrong")    
 
 
 #Let the fun begin
