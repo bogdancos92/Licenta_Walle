@@ -332,8 +332,7 @@ def main():
                             break
 
                         else :
-                            counter = 10
-                            for counter in xrange(1,10):
+                            for counter in range(1,10):
                                 traffic_recognition.findTrafficSign(camera, lower_blue, upper_blue)
                             print("Now it should work")
                             text = str(traffic_recognition.findTrafficSign(camera, lower_blue, upper_blue))
