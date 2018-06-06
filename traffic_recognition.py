@@ -17,38 +17,34 @@ def findTrafficSign(camera, lower_blue, upper_blue):
 
     # while True:
     # grab the current frame
-    # print("Searching for sign inside function")
     (grabbed, frame) = camera.read()
     if not grabbed:
         print("No input image")
-        return "Frame not grabbed"
-
+        break
+    
     frame = imutils.resize(frame, width=500)
     frameArea = frame.shape[0]*frame.shape[1]
-
+    
     # convert color image to HSV color scheme
     hsv = cv2.cvtColor(frame, cv2.COLOR_BGR2HSV)
-
-    # define kernel for smoothing
+    
+    # define kernel for smoothing   
     kernel = np.ones((3,3),np.uint8)
-
     # extract binary image with active blue regions
     mask = cv2.inRange(hsv, lower_blue, upper_blue)
-
     # morphological operations
     mask = cv2.morphologyEx(mask, cv2.MORPH_OPEN, kernel)
     mask = cv2.morphologyEx(mask, cv2.MORPH_CLOSE, kernel)
-
     # find contours in the mask
     cnts = cv2.findContours(mask.copy(), cv2.RETR_EXTERNAL, cv2.CHAIN_APPROX_SIMPLE)[-2]
-
+    
     # defite string variable to hold detected sign description
-    detectedTrafficSign = "None"
-
+    detectedTrafficSign = None
+    
     # define variables to hold values during loop
     largestArea = 0
     largestRect = None
-
+    
     # only proceed if at least one contour was found
     if len(cnts) > 0:
         for cnt in cnts:
@@ -61,40 +57,37 @@ def findTrafficSign(camera, lower_blue, upper_blue):
             rect = cv2.minAreaRect(cnt)
             box = cv2.boxPoints(rect)
             box = np.int0(box)
-
+            
             # count euclidian distance for each side of the rectangle
             sideOne = np.linalg.norm(box[0]-box[1])
             sideTwo = np.linalg.norm(box[0]-box[3])
-
             # count area of the rectangle
             area = sideOne*sideTwo
-
             # find the largest rectangle within all contours
             if area > largestArea:
                 largestArea = area
                 largestRect = box
-
+        
     # draw contour of the found rectangle on the original image
     if largestArea > frameArea*0.02:
         cv2.drawContours(frame,[largestRect],0,(0,0,255),2)
-        #if largestRect is not None:
+        
+    #if largestRect is not None:
         # cut and warp interesting area
         warped = four_point_transform(mask, [largestRect][0])
-
+        
         # show an image if rectangle was found
         #cv2.imshow("Warped", cv2.bitwise_not(warped))
+        
         # use function to detect the sign on the found rectangle
         detectedTrafficSign = identifyTrafficSign(warped)
-        # print ('Found the ' + detectedTrafficSign + ' sign')
-        return detectedTrafficSign
-
-    return "Traffic sign not found"
-        #print(detectedTrafficSign)
+        return(detectedTrafficSign)
         # write the description of the sign on the original image
         # cv2.putText(frame, detectedTrafficSign, tuple(largestRect[0]), cv2.FONT_HERSHEY_SIMPLEX, 0.65, (0, 255, 0), 2)
-
+    
     # show original image
     # cv2.imshow("Original", frame)
+    
     # if the `q` key was pressed, break from the loop
     # if cv2.waitKey(1) & 0xFF is ord('q'):
     #     cv2.destroyAllWindows()
@@ -117,7 +110,7 @@ def identifyTrafficSign(image):
     }
 
     THRESHOLD = 150
-
+    
     image = cv2.bitwise_not(image)
     # (roiH, roiW) = roi.shape
     #subHeight = thresh.shape[0]/10
@@ -127,22 +120,22 @@ def identifyTrafficSign(image):
     subWidth = int(subWidth)
 
     # mark the ROIs borders on the image
-    cv2.rectangle(image, (1*subWidth, 4*subHeight), (3*subWidth, 9*subHeight), (0,255,0),2) # left block
+    cv2.rectangle(image, (subWidth, 4*subHeight), (3*subWidth, 9*subHeight), (0,255,0),2) # left block
     cv2.rectangle(image, (4*subWidth, 4*subHeight), (6*subWidth, 9*subHeight), (0,255,0),2) # center block
     cv2.rectangle(image, (7*subWidth, 4*subHeight), (9*subWidth, 9*subHeight), (0,255,0),2) # right block
     cv2.rectangle(image, (3*subWidth, 2*subHeight), (7*subWidth, 4*subHeight), (0,255,0),2) # top block
 
     # substract 4 ROI of the sign thresh image
-    leftBlock   = image[4*subHeight:9*subHeight, 1*subWidth:3*subWidth]
+    leftBlock = image[4*subHeight:9*subHeight, subWidth:3*subWidth]
     centerBlock = image[4*subHeight:9*subHeight, 4*subWidth:6*subWidth]
-    rightBlock  = image[4*subHeight:9*subHeight, 7*subWidth:9*subWidth]
-    topBlock    = image[2*subHeight:4*subHeight, 3*subWidth:7*subWidth]
+    rightBlock = image[4*subHeight:9*subHeight, 7*subWidth:9*subWidth]
+    topBlock = image[2*subHeight:4*subHeight, 3*subWidth:7*subWidth]
 
     # we now track the fraction of each ROI
-    leftFraction    = np.sum(leftBlock)/(leftBlock.shape[0]*leftBlock.shape[1])
-    centerFraction  = np.sum(centerBlock)/(centerBlock.shape[0]*centerBlock.shape[1])
-    rightFraction   = np.sum(rightBlock)/(rightBlock.shape[0]*rightBlock.shape[1])
-    topFraction     = np.sum(topBlock)/(topBlock.shape[0]*topBlock.shape[1])
+    leftFraction = np.sum(leftBlock)/(leftBlock.shape[0]*leftBlock.shape[1])
+    centerFraction = np.sum(centerBlock)/(centerBlock.shape[0]*centerBlock.shape[1])
+    rightFraction = np.sum(rightBlock)/(rightBlock.shape[0]*rightBlock.shape[1])
+    topFraction = np.sum(topBlock)/(topBlock.shape[0]*topBlock.shape[1])
 
     segments = (leftFraction, centerFraction, rightFraction, topFraction)
     segments = tuple(1 if segment > THRESHOLD else 0 for segment in segments)
@@ -152,7 +145,7 @@ def identifyTrafficSign(image):
     if segments in SIGNS_LOOKUP:
         return SIGNS_LOOKUP[segments]
     else:
-        return '..................................'
+        return None
 
 
 # def main():

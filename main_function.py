@@ -190,7 +190,7 @@ def main():
                                 state = 'end'
                                 break
                             else :
-                                text = traffic_recognition.findTrafficSign(camera, lower_blue, upper_blue)
+                                text = str(traffic_recognition.findTrafficSign(camera, lower_blue, upper_blue))
                                 message = text
 
                                 if text in TRAFFIC_SIGNS:        
