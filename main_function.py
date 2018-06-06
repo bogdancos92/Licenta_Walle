@@ -186,6 +186,7 @@ def main():
                             ElapsedTime = StopTime - StartTime
 
                             if ElapsedTime > 5 :
+                                print("No image found")
                                 state = 'end'
                                 break
                             else :
@@ -213,8 +214,8 @@ def main():
                                         break
 
                                     elif text == 'Move Straight':
-                                        print("Car shouldn't do anything")
-                                        state = 'check_distance'
+                                        print("Car should stop now")
+                                        state = 'end'
                                         break
 
                                     elif text == 'Turn Back':
@@ -230,7 +231,6 @@ def main():
 
                     elif state == 'end' :
                         print("-----------------The End-----------------")
-                        print("No image found")
                         motors.stop()
                         motors.p1.stop()
                         motors.p2.stop()
@@ -274,7 +274,7 @@ def main():
             print("Test complete")
 
         else:
-            print("Fuck this program")
+            print("Something went way to wrong")
 
 
 #Let the fun begin
