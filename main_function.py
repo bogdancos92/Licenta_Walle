@@ -339,9 +339,11 @@ def main():
                                 #Traffic sign found
                                 message = 'Found sign --------- ' + text
                                 print(message)
+                                state = 'check_distance'
                                 break   
                             else:
                                 print(message)
+
                     
                     sleep(1)
                     #end of check_for_sign state
