@@ -17,7 +17,7 @@ def findTrafficSign(camera, lower_blue, upper_blue):
 
     # while True:
     # grab the current frame
-    print("Searching for sign inside function")
+    # print("Searching for sign inside function")
     (grabbed, frame) = camera.read()
     if not grabbed:
         print("No input image")

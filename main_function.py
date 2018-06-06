@@ -226,7 +226,7 @@ def main():
                                 else:
                                     print(message)
                         
-                        sleep(3)
+                        sleep(1)
                         #end of check_for_sign state
 
                     elif state == 'end' :
