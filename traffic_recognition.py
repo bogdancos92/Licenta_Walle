@@ -17,10 +17,11 @@ def findTrafficSign(camera, lower_blue, upper_blue):
 
     # while True:
     # grab the current frame
+    print("Searching for sign inside function")
     (grabbed, frame) = camera.read()
     if not grabbed:
         print("No input image")
-        return None
+        return "Frame not grabbed"
 
     frame = imutils.resize(frame, width=500)
     frameArea = frame.shape[0]*frame.shape[1]
