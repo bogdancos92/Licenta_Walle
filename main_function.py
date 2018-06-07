@@ -127,7 +127,7 @@ def main():
 
         #initialize configurable data
         simple_turn_coef = float(sys.argv[2])        
-        double_turn_coef = int(sys.argv[3])
+        double_turn_coef = float(sys.argv[3])
         config.PWM_FOR_TURNING = int(sys.argv[4])
         config.PWM_FOR_STRAIGHT = 55
         distance_from_sign = int(sys.argv[5])
