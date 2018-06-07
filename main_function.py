@@ -271,8 +271,7 @@ def main():
 
         elif sys.argv[1] == 'testing':
             initial_setup()
-            print("Testin in 2")
-            sleep(2)
+            print("Testing")
             print("simple_turn_coef is "  + str(simple_turn_coef))
             print("double_turn_coef is "  + str(double_turn_coef))
             timer = compute_timer()
