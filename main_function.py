@@ -278,6 +278,7 @@ def main():
             timer = compute_timer()
             motors.right(timer)
             motors.stop()
+            sleep(2)
             timer *= double_turn_coef
             motors.reverse(timer)
             motors.p1.stop()
