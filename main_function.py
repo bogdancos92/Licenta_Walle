@@ -195,6 +195,7 @@ def main():
                                 #God knows why it has to do this in order to work
                                 for counter in range(1,10):
                                     print(str(traffic_recognition.findTrafficSign(camera, lower_blue, upper_blue)))
+                                    sleep(0.2)
 
                                 print("Now it should work")
                                 text = str(traffic_recognition.findTrafficSign(camera, lower_blue, upper_blue))
