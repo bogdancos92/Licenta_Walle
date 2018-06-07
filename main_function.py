@@ -14,7 +14,7 @@ import config
 import motors
 
 #surface coefficient
-surface_coef = 1.0
+simple_turn_coef = 1.0
 
 #distance from sign
 distance_from_sign = 30 #cm
@@ -97,14 +97,14 @@ def compute_RPM():
 
 #compute time needed to spin 90 degrees
 def compute_timer():
-    global surface_coef
+    global simple_turn_coef
     RPM = compute_RPM()
     # distance to move 130mm
     # one rotation = pi * 65mm = 204
     # 0.637 rotations   ... x sec
     # RPM rotations     ... 60 sec
     # x = 0.637 * 60 sec / RPM
-    time = ((0.637 * 60.0)/RPM) * surface_coef
+    time = ((0.637 * 60.0)/RPM) * simple_turn_coef
     # print ('Time to spin ... ' + str(time))
     return time
 
@@ -117,17 +117,19 @@ def average_distance():
 
 #kind of a main function
 def main():
-    global surface_coef
-    global distance_from_sign
+    global simple_turn_coef
+    global double_turn_coef
+    global distance_from_sign    
 
     print('In main function')
     
     if len(sys.argv) is 6:
 
         #initialize configurable data
-        surface_coef = float(sys.argv[2])
-        config.PWM_FOR_TURNING = int(sys.argv[3])
-        config.PWM_FOR_STRAIGHT = int(sys.argv[4])
+        simple_turn_coef = float(sys.argv[2])        
+        double_turn_coef = int(sys.argv[3])
+        config.PWM_FOR_TURNING = int(sys.argv[4])
+        config.PWM_FOR_STRAIGHT = 55
         distance_from_sign = int(sys.argv[5])
 
         if sys.argv[1] == 'start':
@@ -224,6 +226,7 @@ def main():
                                         break
 
                                     elif text == 'Turn Back':
+                                        timer *= double_turn_coef
                                         motors.reverse(timer)
                                         print("Car should have turned back by now")
                                         state = 'check_distance'
@@ -270,9 +273,13 @@ def main():
             initial_setup()
             print("Testin in 2")
             sleep(2)
-            print("surface_coef is "  + str(surface_coef))
+            print("simple_turn_coef is "  + str(simple_turn_coef))
+            print("double_turn_coef is "  + str(double_turn_coef))
             timer = compute_timer()
             motors.right(timer)
+            motors.stop()
+            timer *= double_turn_coef
+            motors.reverse(timer)
             motors.p1.stop()
             motors.p2.stop()
             GPIO.cleanup()
